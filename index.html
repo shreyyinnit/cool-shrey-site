@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Motion Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #0D0D0D; --ink-2: #2A2A2A; --ink-3: #555; --ink-4: #888;
+    --paper: #FAFAF8; --paper-2: #F2F2EE; --rule: #E0E0DA;
+    --accent: #C8281E; --accent-dim: #8B1C15;
+    --mono: 'DM Mono', monospace; --serif: 'Playfair Display', Georgia, serif; --sans: 'DM Sans', system-ui, sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 64px; background: var(--paper); border-bottom: 1px solid var(--rule); transition: box-shadow 0.2s; }
+  nav.scrolled { box-shadow: 0 1px 20px rgba(0,0,0,0.06); }
+  .nav-logo { font-family: var(--mono); font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+  .nav-logo .dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; display: inline-block; animation: pulse 2.5s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.7); } }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a { font-size: 13px; font-weight: 400; color: var(--ink-3); text-decoration: none; letter-spacing: 0.02em; transition: color 0.15s; }
+  .nav-links a:hover { color: var(--ink); }
+
+  .hero { min-height: 100vh; display: grid; grid-template-columns: 1fr 1fr; padding-top: 64px; }
+  .hero-left { padding: 80px 48px; display: flex; flex-direction: column; justify-content: center; border-right: 1px solid var(--rule); }
+  .hero-eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 28px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.2s; }
+  .hero-title { font-family: var(--serif); font-size: clamp(52px, 6vw, 88px); font-weight: 900; line-height: 1.0; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 32px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.4s; }
+  .hero-title em { font-style: italic; color: var(--accent); }
+  .hero-desc { font-size: 17px; font-weight: 300; line-height: 1.75; color: var(--ink-3); max-width: 480px; margin-bottom: 48px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.6s; }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; opacity: 0; animation: fadeUp 0.8s ease forwards 0.8s; }
+  .btn-primary { display: inline-flex; align-items: center; gap: 8px; background: var(--ink); color: var(--paper); font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: 0.04em; padding: 14px 28px; text-decoration: none; border: 1px solid var(--ink); transition: background 0.2s, color 0.2s; }
+  .btn-primary:hover { background: var(--accent); border-color: var(--accent); }
+  .btn-secondary { display: inline-flex; align-items: center; gap: 8px; background: transparent; color: var(--ink); font-family: var(--sans); font-size: 13px; font-weight: 400; letter-spacing: 0.04em; padding: 14px 28px; text-decoration: none; border: 1px solid var(--rule); transition: border-color 0.2s; }
+  .btn-secondary:hover { border-color: var(--ink); }
+  .hero-right { padding: 80px 48px; display: flex; flex-direction: column; justify-content: center; background: var(--paper-2); opacity: 0; animation: fadeIn 1s ease forwards 0.9s; }
+  .hero-right-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--rule); }
+  .what-we-do { list-style: none; display: flex; flex-direction: column; gap: 0; }
+  .what-we-do li { display: flex; align-items: baseline; gap: 20px; padding: 20px 0; border-bottom: 1px solid var(--rule); }
+  .what-we-do li:last-child { border-bottom: none; }
+  .wwd-num { font-family: var(--mono); font-size: 11px; color: var(--accent); min-width: 24px; font-weight: 500; }
+  .wwd-verb { font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--ink); min-width: 120px; }
+  .wwd-desc { font-size: 13px; color: var(--ink-4); font-weight: 300; line-height: 1.5; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+  .ticker { border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); overflow: hidden; background: var(--ink); padding: 12px 0; display: flex; align-items: center; }
+  .ticker-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); padding: 0 24px; white-space: nowrap; border-right: 1px solid #333; margin-right: 24px; flex-shrink: 0; }
+  .ticker-track { display: flex; animation: ticker 30s linear infinite; white-space: nowrap; }
+  .ticker-item { font-family: var(--mono); font-size: 11px; color: #aaa; letter-spacing: 0.06em; padding: 0 40px; flex-shrink: 0; }
+  .ticker-item span { color: var(--accent); margin-right: 8px; }
+  @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  .about { display: grid; grid-template-columns: 280px 1fr; border-bottom: 1px solid var(--rule); }
+  .about-sidebar { padding: 80px 48px; border-right: 1px solid var(--rule); display: flex; flex-direction: column; gap: 48px; }
+  .sidebar-label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-4); }
+  .stat-block { display: flex; flex-direction: column; gap: 4px; }
+  .stat-num { font-family: var(--serif); font-size: 48px; font-weight: 900; color: var(--ink); line-height: 1; }
+  .stat-label { font-size: 12px; color: var(--ink-4); font-weight: 300; }
+  .about-content { padding: 80px 64px; }
+  .section-eyebrow { font-family: var(--mono); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+  .section-title { font-family: var(--serif); font-size: clamp(32px, 4vw, 52px); font-weight: 700; line-height: 1.15; color: var(--ink); margin-bottom: 32px; }
+  .section-title em { font-style: italic; color: var(--accent); }
+  .about-body { font-size: 16px; font-weight: 300; line-height: 1.9; color: var(--ink-3); max-width: 620px; margin-bottom: 48px; }
+  .principles { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; background: var(--rule); border: 1px solid var(--rule); margin-top: 48px; }
+  .principle { background: var(--paper); padding: 28px 32px; transition: background 0.15s; }
+  .principle:hover { background: var(--paper-2); }
+  .principle-num { font-family: var(--mono); font-size: 10px; color: var(--accent); letter-spacing: 0.15em; margin-bottom: 10px; }
+  .principle-title { font-family: var(--serif); font-size: 18px; font-weight: 700; color: var(--ink); margin-bottom: 8px; }
+  .principle-desc { font-size: 13px; color: var(--ink-4); font-weight: 300; line-height: 1.6; }
+
+  .focus { padding: 96px 48px; border-bottom: 1px solid var(--rule); }
+  .focus-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 64px; padding-bottom: 32px; border-bottom: 1px solid var(--rule); }
+  .focus-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+  .focus-card { background: var(--paper); padding: 40px 32px; transition: background 0.2s; position: relative; overflow: hidden; }
+  .focus-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform 0.3s ease; }
+  .focus-card:hover { background: var(--paper-2); }
+  .focus-card:hover::before { transform: scaleX(1); }
+  .focus-icon { font-family: var(--mono); font-size: 11px; letter-spacing: 0.15em; color: var(--accent); margin-bottom: 20px; text-transform: uppercase; }
+  .focus-title { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--ink); margin-bottom: 14px; line-height: 1.2; }
+  .focus-desc { font-size: 13px; color: var(--ink-4); font-weight: 300; line-height: 1.7; }
+
+  .team { padding: 96px 48px; border-bottom: 1px solid var(--rule); background: var(--ink); }
+  .team .section-eyebrow { color: var(--accent); }
+  .team .section-title { color: var(--paper); }
+  .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: #222; border: 1px solid #222; margin-top: 56px; }
+  .team-card { background: #111; padding: 36px 32px; transition: background 0.15s; }
+  .team-card:hover { background: #161616; }
+  .team-role { font-family: var(--mono); font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .team-title { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--paper); margin-bottom: 10px; }
+  .team-count { font-family: var(--mono); font-size: 11px; color: #555; margin-bottom: 16px; }
+  .team-desc { font-size: 13px; color: #666; font-weight: 300; line-height: 1.7; }
+
+  .leadership { padding: 96px 48px; border-bottom: 1px solid var(--rule); }
+  .leadership-header { margin-bottom: 56px; padding-bottom: 32px; border-bottom: 1px solid var(--rule); }
+  .leadership-grid { display: flex; flex-direction: column; gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+  .leader-card { background: var(--paper); cursor: pointer; transition: background 0.15s; }
+  .leader-card:hover { background: var(--paper-2); }
+  .leader-coming { cursor: default; background: #0D0D0D; }
+  .leader-coming:hover { background: #0D0D0D; }
+  .leader-top { display: flex; align-items: center; gap: 20px; padding: 28px 32px; }
+  .leader-initials { width: 52px; height: 52px; border-radius: 50%; background: var(--accent); color: white; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 500; flex-shrink: 0; font-family: var(--mono); letter-spacing: 0.05em; }
+  .leader-meta { flex: 1; }
+  .leader-name { font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--ink); margin: 0 0 4px; }
+  .leader-role-tag { font-size: 12px; color: var(--ink-4); font-family: var(--mono); letter-spacing: 0.08em; text-transform: uppercase; margin: 0; }
+  .leader-toggle { font-size: 24px; font-weight: 300; color: var(--accent); width: 32px; text-align: center; transition: transform 0.3s ease; flex-shrink: 0; font-family: var(--mono); }
+  .leader-toggle.open { transform: rotate(45deg); }
+  .leader-bio { max-height: 0; overflow: hidden; transition: max-height 0.6s ease; }
+  .leader-bio.open { max-height: 1400px; }
+  .leader-bio-inner { padding: 32px 32px 40px 104px; border-top: 1px solid var(--rule); }
+  .leader-bio-inner p { font-size: 15px; line-height: 1.85; color: var(--ink-3); margin-bottom: 16px; font-weight: 300; }
+  .leader-bio-inner strong { color: var(--ink); font-weight: 500; }
+  .leader-tags { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--rule); }
+  .ltag { font-size: 11px; padding: 4px 10px; border-radius: 99px; border: 1px solid var(--rule); color: var(--ink-4); font-family: var(--mono); }
+
+  .cta { padding: 120px 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 96px; align-items: center; border-bottom: 1px solid var(--rule); }
+  .cta-title { font-family: var(--serif); font-size: clamp(36px, 4vw, 60px); font-weight: 900; line-height: 1.1; color: var(--ink); }
+  .cta-title em { font-style: italic; color: var(--accent); }
+  .cta-right { display: flex; flex-direction: column; gap: 24px; }
+  .cta-desc { font-size: 16px; font-weight: 300; color: var(--ink-3); line-height: 1.8; }
+  .cta-actions { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
+  .email-plain { font-family: var(--mono); font-size: 13px; color: var(--ink-3); }
+
+  footer { padding: 48px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--rule); }
+  .footer-logo { font-family: var(--mono); font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-4); display: flex; align-items: center; gap: 8px; }
+  .footer-logo .dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+  .footer-note { font-size: 12px; color: var(--ink-4); font-weight: 300; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { font-size: 12px; color: var(--ink-4); text-decoration: none; transition: color 0.15s; }
+  .footer-links a:hover { color: var(--ink); }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; } .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; } .hero-right { display: none; } .hero-left { padding: 60px 24px; }
+    .about { grid-template-columns: 1fr; } .about-sidebar { display: none; } .about-content { padding: 60px 24px; }
+    .focus { padding: 60px 24px; } .focus-grid { grid-template-columns: 1fr 1fr; } .focus-header { flex-direction: column; gap: 20px; align-items: flex-start; }
+    .team { padding: 60px 24px; } .team-grid { grid-template-columns: 1fr 1fr; }
+    .leadership { padding: 60px 24px; } .leader-bio-inner { padding: 24px 24px 32px 24px; }
+    .cta { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
+    .principles { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 20px; text-align: center; padding: 32px 24px; }
+  }
+  @media (max-width: 600px) { .focus-grid { grid-template-columns: 1fr; } .team-grid { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="nav-logo"><span class="dot"></span>Motion Desk</a>
+  <ul class="nav-links">
+    <li><a href="#about">About</a></li>
+    <li><a href="#focus">Coverage</a></li>
+    <li><a href="#leadership">Team</a></li>
+    <li><a href="#join">Join</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-eyebrow">Independent Investigative Journalism</p>
+    <h1 class="hero-title">The story<br>is always<br><em>in motion.</em></h1>
+    <p class="hero-desc">Motion Desk is a fully digital, independent investigative journalism initiative. We find what is hidden, explain what is complex, and report what matters — using evidence, not assumptions.</p>
+    <div class="hero-actions">
+      <a href="#focus" class="btn-primary">Our Coverage →</a>
+      <a href="#join" class="btn-secondary">Join the Desk</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <p class="hero-right-label">What we do</p>
+    <ul class="what-we-do">
+      <li><span class="wwd-num">01</span><span class="wwd-verb">Find</span><span class="wwd-desc">Stories buried in documents, data sets, and public records</span></li>
+      <li><span class="wwd-num">02</span><span class="wwd-verb">Explore</span><span class="wwd-desc">Every angle, every source, every inconsistency</span></li>
+      <li><span class="wwd-num">03</span><span class="wwd-verb">Explain</span><span class="wwd-desc">Complex systems made clear — without dumbing down</span></li>
+      <li><span class="wwd-num">04</span><span class="wwd-verb">Ask</span><span class="wwd-desc">The questions others have stopped asking</span></li>
+      <li><span class="wwd-num">05</span><span class="wwd-verb">Tell</span><span class="wwd-desc">Publish only what holds up — fully sourced, fact-checked</span></li>
+    </ul>
+  </div>
+</section>
+
+<div class="ticker">
+  <span class="ticker-label">Live</span>
+  <div class="ticker-track">
+    <span class="ticker-item"><span>—</span> Evidence-based reporting</span>
+    <span class="ticker-item"><span>—</span> Open-source intelligence</span>
+    <span class="ticker-item"><span>—</span> Document analysis</span>
+    <span class="ticker-item"><span>—</span> Data investigations</span>
+    <span class="ticker-item"><span>—</span> Fact-checking</span>
+    <span class="ticker-item"><span>—</span> Policy research</span>
+    <span class="ticker-item"><span>—</span> Timeline investigations</span>
+    <span class="ticker-item"><span>—</span> Public interest journalism</span>
+    <span class="ticker-item"><span>—</span> Evidence-based reporting</span>
+    <span class="ticker-item"><span>—</span> Open-source intelligence</span>
+    <span class="ticker-item"><span>—</span> Document analysis</span>
+    <span class="ticker-item"><span>—</span> Data investigations</span>
+    <span class="ticker-item"><span>—</span> Fact-checking</span>
+    <span class="ticker-item"><span>—</span> Policy research</span>
+    <span class="ticker-item"><span>—</span> Timeline investigations</span>
+    <span class="ticker-item"><span>—</span> Public interest journalism</span>
+  </div>
+</div>
+
+<section class="about" id="about">
+  <div class="about-sidebar">
+    <p class="sidebar-label">By the numbers</p>
+    <div class="stat-block"><span class="stat-num">9</span><span class="stat-label">Founding team members</span></div>
+    <div class="stat-block"><span class="stat-num">4</span><span class="stat-label">Coverage areas</span></div>
+    <div class="stat-block"><span class="stat-num">7</span><span class="stat-label">Steps per investigation</span></div>
+    <div class="stat-block"><span class="stat-num">0</span><span class="stat-label">Institutional affiliations</span></div>
+  </div>
+  <div class="about-content">
+    <p class="section-eyebrow">About Motion Desk</p>
+    <h2 class="section-title">Journalism that<br><em>never stands still.</em></h2>
+    <p class="about-body">Motion Desk is an independent, fully digital investigative journalism initiative. We publish evidence-based reports on matters of public interest — using open-source research, data analysis, and document review. No affiliations. No agenda. No shortcuts.</p>
+    <p class="about-body">We are not a gossip page. We are not a rumour mill. Every claim links to a source. Every story survives a fact-check. If it does not hold up, it does not go out.</p>
+    <div class="principles">
+      <div class="principle"><p class="principle-num">01</p><p class="principle-title">Evidence First</p><p class="principle-desc">Every claim links to a verifiable source. No exceptions.</p></div>
+      <div class="principle"><p class="principle-num">02</p><p class="principle-title">Full Transparency</p><p class="principle-desc">Readers see exactly where our information comes from.</p></div>
+      <div class="principle"><p class="principle-num">03</p><p class="principle-title">Neutral Tone</p><p class="principle-desc">Analytical. Calm. Precise. Never emotional or activist.</p></div>
+      <div class="principle"><p class="principle-num">04</p><p class="principle-title">Public Interest</p><p class="principle-desc">Stories must matter beyond drama or spectacle.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="focus" id="focus">
+  <div class="focus-header">
+    <div><p class="section-eyebrow">Coverage Areas</p><h2 class="section-title">What we<br><em>investigate.</em></h2></div>
+    <p style="font-size:13px; color:var(--ink-4); font-weight:300; max-width:320px; line-height:1.7;">All investigations are conducted entirely online using publicly available sources, databases, and documents.</p>
+  </div>
+  <div class="focus-grid">
+    <div class="focus-card"><p class="focus-icon">01 / Document</p><h3 class="focus-title">Document Analysis</h3><p class="focus-desc">Government reports, policy documents, public filings, and institutional announcements reviewed for patterns and inconsistencies.</p></div>
+    <div class="focus-card"><p class="focus-icon">02 / Data</p><h3 class="focus-title">Data Investigations</h3><p class="focus-desc">Statistics, budget allocations, education policies, and demographic patterns that reveal what official narratives obscure.</p></div>
+    <div class="focus-card"><p class="focus-icon">03 / Media</p><h3 class="focus-title">Media & Misinformation</h3><p class="focus-desc">Fact-checking public claims, tracking misinformation, and analysing how narratives are constructed across media.</p></div>
+    <div class="focus-card"><p class="focus-icon">04 / Timeline</p><h3 class="focus-title">Timeline Investigations</h3><p class="focus-desc">Step-by-step reconstructions of events to surface inconsistencies, accountability gaps, and buried facts.</p></div>
+  </div>
+</section>
+
+<section class="team" id="team">
+  <p class="section-eyebrow">The Founding Team</p>
+  <h2 class="section-title" style="color:var(--paper);">Small by design.<br><em>Serious by default.</em></h2>
+  <div class="team-grid">
+    <div class="team-card"><p class="team-role">Leadership</p><h3 class="team-title">Co-Editors-in-Chief</h3><p class="team-count">2 people</p><p class="team-desc">Editorial direction, final story approval, and operational oversight. One owns editorial. One owns operations.</p></div>
+    <div class="team-card"><p class="team-role">Core Team</p><h3 class="team-title">Investigative Researchers</h3><p class="team-count">3 people</p><p class="team-desc">Story pitches, evidence gathering, source collection, and first-draft writing. The engine of Motion Desk.</p></div>
+    <div class="team-card"><p class="team-role">Core Team</p><h3 class="team-title">OSINT & Data Analyst</h3><p class="team-count">1 person</p><p class="team-desc">Open-source intelligence, data sets, and digital trail analysis. The person researchers come to when they hit a wall.</p></div>
+    <div class="team-card"><p class="team-role">Core Team</p><h3 class="team-title">Fact-Checker</h3><p class="team-count">1 person</p><p class="team-desc">Every claim, every source, every number — independently verified before any story goes out.</p></div>
+    <div class="team-card"><p class="team-role">Publishing</p><h3 class="team-title">Digital Manager</h3><p class="team-count">1 person</p><p class="team-desc">Formats and publishes reports, manages the website and social platforms, handles visual presentation.</p></div>
+    <div class="team-card" style="display:flex;flex-direction:column;justify-content:center;"><p class="team-role">Total</p><h3 class="team-title" style="font-size:48px;line-height:1;">9</h3><p class="team-desc" style="margin-top:8px;">founding members. Lean, focused, no dead weight.</p></div>
+  </div>
+</section>
+
+<section class="leadership" id="leadership">
+  <div class="leadership-header">
+    <p class="section-eyebrow">Meet the Leadership</p>
+    <h2 class="section-title">The people behind<br><em>Motion Desk.</em></h2>
+  </div>
+  <div class="leadership-grid">
+
+    <div class="leader-card" onclick="toggleBio('shaurya')">
+      <div class="leader-top">
+        <div class="leader-initials">SS</div>
+        <div class="leader-meta">
+          <p class="leader-name">Shaurya Seth</p>
+          <p class="leader-role-tag">Co-Editor-in-Chief · Founder</p>
+        </div>
+        <div class="leader-toggle" id="shaurya-toggle">+</div>
+      </div>
+      <div class="leader-bio" id="shaurya-bio">
+        <div class="leader-bio-inner">
+          <p>Forget the title. <strong>Founder</strong> is the least interesting thing about Shaurya, and it just happens to be the most recent thing he has built. At 19, pursuing Applied Psychology at Amity University, Lucknow, he is studying exactly what drives him: how human behaviour works, how narratives are constructed, and how language shapes the way people understand their world. He did not stumble into journalism. He architected a place for it to exist.</p>
+          <p>Motion Desk is his. From the editorial framework to the investigative workflow to the digital infrastructure, he designed and launched it from the ground up, independently. Before that, he built Coriolis, a student-led media and writing community, because he saw a gap and decided filling it was more useful than waiting for someone else to. <strong>He thinks in platforms, not just participation.</strong> Where others join things, Shaurya builds the thing others join.</p>
+          <p>His time as President of his school's Lexicography Club was not an extracurricular. It was an early signal. Language, for Shaurya, is not merely a tool for communication. It is an object of study in itself. He has developed a deliberate command over multiple accents, American, British, Australian, not as a party trick, but as a practised understanding of how speech shapes perception, identity, and trust. It is the kind of interest that quietly reveals how his mind works: <strong>always looking underneath the surface for the mechanism.</strong></p>
+          <p>Model UN stages sharpened his instinct for debate and diplomatic framing. Editorial writing gave him precision. Investigative research gave him patience. The result is someone who moves between curiosity and execution with an ease that usually takes people a decade to develop.</p>
+          <p>Somewhere along the way, people started calling him Shrey. Nobody quite knows how it started. There was no moment, no announcement, no logical abbreviation. It simply happened, the way certain things do around Shaurya, quietly and all at once, and everyone just went with it. Those closest to him have not called him anything else since.</p>
+          <div class="leader-tags">
+            <span class="ltag">Applied Psychology</span>
+            <span class="ltag">Investigative Research</span>
+            <span class="ltag">Editorial Writing</span>
+            <span class="ltag">Media Strategy</span>
+            <span class="ltag">Model UN</span>
+            <span class="ltag">Language & Accents</span>
+            <span class="ltag">Platform Building</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="leader-card" onclick="toggleBio('aadya')">
+      <div class="leader-top">
+        <div class="leader-initials">AM</div>
+        <div class="leader-meta">
+          <p class="leader-name">Aadya Mishra</p>
+          <p class="leader-role-tag">Co-Editor-in-Chief</p>
+        </div>
+        <div class="leader-toggle" id="aadya-toggle">+</div>
+      </div>
+      <div class="leader-bio" id="aadya-bio">
+        <div class="leader-bio-inner">
+          <p>Aadya Mishra describes herself as a simple girl with a unique vision. The first part is debatable. The second part is not. At 20, pursuing PCB at Springdale College, she has already co-authored an anthology, earned a black belt in Taekwondo, and built a reputation as someone who notices things others walk straight past. <strong>Perceptionist</strong> is the word she uses for herself. It fits better than most labels people spend years searching for.</p>
+          <p>Her relationship with language began early and never stayed casual. Poems, street plays, articles, research papers — Aadya does not pick a lane because she does not believe in them. She was recognised with a special award for best writing and creative expression, compiled and co-authored the anthology <em>A Heart's News</em>, and contributed consistently to Expressions, her college magazine, as part of the Student Editorial Board. These are not the credentials of someone who writes when inspired. They are the credentials of someone who writes because stopping is not an option.</p>
+          <p>In school, she was House Captain and a member of the Student Council — roles that signal less about authority and more about the kind of person others instinctively orient toward. On the debate stage, she learned that a strong argument is only as good as the attention you paid before you opened your mouth. That lesson shows up in everything she does. <strong>Aadya listens first.</strong> It is why her writing lands the way it does, and why her reporting will too.</p>
+          <p>The Taekwondo medals, earned at every level from local to national, are not a footnote. They are a character reference. Discipline, patience, the willingness to take a hit and recalibrate — these are not athletic qualities. They are editorial ones. Motion Desk runs on exactly that kind of temperament.</p>
+          <p>She says you can expect anything and everything from her. That is not bravado. It is just an honest description of someone whose range has never been her limitation.</p>
+          <div class="leader-tags">
+            <span class="ltag">BJMC</span>
+            <span class="ltag">Creative Writing</span>
+            <span class="ltag">Editorial Journalism</span>
+            <span class="ltag">Research</span>
+            <span class="ltag">Debate</span>
+            <span class="ltag">Taekwondo</span>
+            <span class="ltag">Poetry & Street Theatre</span>
+            <span class="ltag">Student Leadership</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section class="cta" id="join">
+  <h2 class="cta-title">Want to be<br>part of<br><em>what's next?</em></h2>
+  <div class="cta-right">
+    <p class="cta-desc">Motion Desk is building its founding team. We are looking for investigative researchers, an OSINT analyst, a fact-checker, and a digital manager. If you are serious, reliable, and curious — we want to hear from you.</p>
+    <p class="cta-desc" style="font-size:13px;">We do not hire for enthusiasm. We hire for consistency. The first three months will be demanding and unglamorous. That is the point.</p>
+    <div class="cta-actions">
+      <a href="mailto:themotiondesk@gmail.com" class="btn-primary">Get in Touch →</a>
+      <a href="#about" class="btn-secondary">Read the Brief</a>
+    </div>
+    <p class="email-plain">themotiondesk@gmail.com</p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo"><span class="dot"></span>Motion Desk</div>
+  <p class="footer-note">Independent. Evidence-based. Always in motion.</p>
+  <div class="footer-links">
+    <a href="#about">About</a>
+    <a href="#focus">Coverage</a>
+    <a href="#leadership">Team</a>
+    <a href="#join">Join</a>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
+  function toggleBio(id) {
+    const bio = document.getElementById(id + '-bio');
+    const toggle = document.getElementById(id + '-toggle');
+    const isOpen = bio.classList.contains('open');
+    bio.classList.toggle('open', !isOpen);
+    toggle.classList.toggle('open', !isOpen);
+  }
+</script>
+</body>
+</html>
