@@ -125,6 +125,20 @@
   .cta-actions { display: flex; gap: 16px; flex-wrap: wrap; align-items: center; }
   .email-plain { font-family: var(--mono); font-size: 13px; color: var(--ink-3); }
 
+  .blog { padding: 96px 48px; border-bottom: 1px solid var(--rule); background: var(--paper-2); }
+  .blog .section-eyebrow { color: var(--accent); }
+  .blog .section-title { color: var(--ink); }
+  .blog-intro { font-size: 16px; color: var(--ink-3); margin-bottom: 48px; line-height: 1.8; max-width: 620px; }
+  .blog-preview { display: grid; grid-template-columns: repeat(2, 1fr); gap: 32px; margin-top: 48px; }
+  .blog-preview-card { background: var(--paper); padding: 32px; border: 1px solid var(--rule); transition: background 0.15s; }
+  .blog-preview-card:hover { background: white; }
+  .blog-preview-card a { text-decoration: none; color: inherit; }
+  .blog-card-date { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .blog-card-title { font-family: var(--serif); font-size: 20px; font-weight: 700; color: var(--ink); margin-bottom: 12px; line-height: 1.2; }
+  .blog-card-excerpt { font-size: 13px; color: var(--ink-4); font-weight: 300; line-height: 1.6; }
+  .blog-cta { display: inline-flex; align-items: center; gap: 8px; background: var(--ink); color: var(--paper); font-family: var(--sans); font-size: 13px; font-weight: 500; letter-spacing: 0.04em; padding: 14px 28px; text-decoration: none; border: 1px solid var(--ink); transition: background 0.2s, color 0.2s; margin-top: 48px; }
+  .blog-cta:hover { background: var(--accent); border-color: var(--accent); }
+
   footer { padding: 48px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--rule); }
   .footer-logo { font-family: var(--mono); font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-4); display: flex; align-items: center; gap: 8px; }
   .footer-logo .dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
@@ -140,6 +154,7 @@
     .focus { padding: 60px 24px; } .focus-grid { grid-template-columns: 1fr 1fr; } .focus-header { flex-direction: column; gap: 20px; align-items: flex-start; }
     .team { padding: 60px 24px; } .team-grid { grid-template-columns: 1fr 1fr; }
     .leadership { padding: 60px 24px; } .leader-bio-inner { padding: 24px 24px 32px 24px; }
+    .blog { padding: 60px 24px; } .blog-preview { grid-template-columns: 1fr; }
     .cta { grid-template-columns: 1fr; padding: 60px 24px; gap: 40px; }
     .principles { grid-template-columns: 1fr; }
     footer { flex-direction: column; gap: 20px; text-align: center; padding: 32px 24px; }
@@ -154,7 +169,8 @@
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#focus">Coverage</a></li>
-    <li><a href="#leadership">Team</a></li>
+    <li><a href="/team/">Team</a></li>
+    <li><a href="/blog/">Blog</a></li>
     <li><a href="#join">Join</a></li>
   </ul>
 </nav>
@@ -322,6 +338,29 @@
   </div>
 </section>
 
+<section class="blog" id="blog">
+  <p class="section-eyebrow">Insights & Methodology</p>
+  <h2 class="section-title">Read our <em>blog.</em></h2>
+  <p class="blog-intro">Behind-the-scenes insights, investigative methodology, and updates from the Motion Desk team. Learn how we approach evidence-based journalism.</p>
+  <div class="blog-preview">
+    <div class="blog-preview-card">
+      <a href="/blog/sample-post.html">
+        <p class="blog-card-date">Coming Soon</p>
+        <h3 class="blog-card-title">How We Investigate</h3>
+        <p class="blog-card-excerpt">A behind-the-scenes look at Motion Desk's investigative process and methodology.</p>
+      </a>
+    </div>
+    <div class="blog-preview-card">
+      <a href="/blog/">
+        <p class="blog-card-date">Updates</p>
+        <h3 class="blog-card-title">Latest from Motion Desk</h3>
+        <p class="blog-card-excerpt">Stay updated with the latest insights, tools, and findings from our investigative work.</p>
+      </a>
+    </div>
+  </div>
+  <a href="/blog/" class="blog-cta">View All Posts →</a>
+</section>
+
 <section class="cta" id="join">
   <h2 class="cta-title">Want to be<br>part of<br><em>what's next?</em></h2>
   <div class="cta-right">
@@ -342,7 +381,8 @@
   <div class="footer-links">
     <a href="#about">About</a>
     <a href="#focus">Coverage</a>
-    <a href="#leadership">Team</a>
+    <a href="/team/">Team</a>
+    <a href="/blog/">Blog</a>
     <a href="#join">Join</a>
     <a href="https://instagram.com/themotiondesk" target="_blank">Instagram</a>
   </div>
