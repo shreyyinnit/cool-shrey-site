@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Our Team - Motion Desk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --ink: #0D0D0D; --ink-2: #2A2A2A; --ink-3: #555; --ink-4: #888;
+    --paper: #FAFAF8; --paper-2: #F2F2EE; --rule: #E0E0DA;
+    --accent: #C8281E; --accent-dim: #8B1C15;
+    --mono: 'DM Mono', monospace; --serif: 'Playfair Display', Georgia, serif; --sans: 'DM Sans', system-ui, sans-serif;
+  }
+  html { scroll-behavior: smooth; }
+  body { background: var(--paper); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 48px; height: 64px; background: var(--paper); border-bottom: 1px solid var(--rule); transition: box-shadow 0.2s; }
+  nav.scrolled { box-shadow: 0 1px 20px rgba(0,0,0,0.06); }
+  .nav-logo { font-family: var(--mono); font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); text-decoration: none; display: flex; align-items: center; gap: 10px; }
+  .nav-logo .dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; display: inline-block; animation: pulse 2.5s ease-in-out infinite; }
+  @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.7); } }
+  .nav-links { display: flex; gap: 36px; list-style: none; }
+  .nav-links a { font-size: 13px; font-weight: 400; color: var(--ink-3); text-decoration: none; letter-spacing: 0.02em; transition: color 0.15s; }
+  .nav-links a:hover { color: var(--ink); }
+
+  .page-header { min-height: 60vh; padding-top: 64px; display: flex; align-items: center; justify-content: center; text-align: center; border-bottom: 1px solid var(--rule); }
+  .header-content { max-width: 720px; padding: 0 48px; }
+  .header-eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--accent); margin-bottom: 28px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.2s; }
+  .header-title { font-family: var(--serif); font-size: clamp(48px, 6vw, 72px); font-weight: 900; line-height: 1.1; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 24px; opacity: 0; animation: fadeUp 0.8s ease forwards 0.4s; }
+  .header-title em { font-style: italic; color: var(--accent); }
+  .header-desc { font-size: 17px; font-weight: 300; line-height: 1.75; color: var(--ink-3); opacity: 0; animation: fadeUp 0.8s ease forwards 0.6s; }
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+  .team-section { padding: 96px 48px; }
+  .team-section h2 { font-family: var(--serif); font-size: 32px; font-weight: 700; color: var(--ink); margin-bottom: 56px; }
+  .team-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--rule); border: 1px solid var(--rule); }
+  .team-member { background: var(--paper); padding: 40px 32px; transition: background 0.15s; }
+  .team-member:hover { background: var(--paper-2); }
+  .member-role { font-family: var(--mono); font-size: 10px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+  .member-title { font-family: var(--serif); font-size: 22px; font-weight: 700; color: var(--ink); margin-bottom: 12px; line-height: 1.2; }
+  .member-desc { font-size: 13px; color: var(--ink-4); font-weight: 300; line-height: 1.7; }
+  .member-placeholder { font-size: 13px; color: var(--ink-4); font-style: italic; margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--rule); }
+
+  footer { padding: 48px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid var(--rule); }
+  .footer-logo { font-family: var(--mono); font-size: 12px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-4); display: flex; align-items: center; gap: 8px; }
+  .footer-logo .dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; }
+  .footer-note { font-size: 12px; color: var(--ink-4); font-weight: 300; }
+  .footer-links { display: flex; gap: 24px; }
+  .footer-links a { font-size: 12px; color: var(--ink-4); text-decoration: none; transition: color 0.15s; }
+  .footer-links a:hover { color: var(--ink); }
+
+  @media (max-width: 900px) {
+    nav { padding: 0 24px; } .nav-links { display: none; }
+    .page-header { min-height: 50vh; padding: 60px 24px; }
+    .team-section { padding: 60px 24px; }
+    .team-grid { grid-template-columns: 1fr 1fr; }
+    footer { flex-direction: column; gap: 20px; text-align: center; padding: 32px 24px; }
+  }
+  @media (max-width: 600px) {
+    .team-grid { grid-template-columns: 1fr; }
+    .header-title { font-size: 36px; }
+  }
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="/" class="nav-logo"><span class="dot"></span>Motion Desk</a>
+  <ul class="nav-links">
+    <li><a href="/#about">About</a></li>
+    <li><a href="/#focus">Coverage</a></li>
+    <li><a href="/team/">Team</a></li>
+    <li><a href="/#join">Join</a></li>
+  </ul>
+</nav>
+
+<section class="page-header">
+  <div class="header-content">
+    <p class="header-eyebrow">Our Team</p>
+    <h1 class="header-title">Small by design.<br><em>Serious by default.</em></h1>
+    <p class="header-desc">Meet the people building Motion Desk. Nine founding members across editorial, research, fact-checking, and publishing.</p>
+  </div>
+</section>
+
+<section class="team-section">
+  <h2>Leadership</h2>
+  <div class="team-grid">
+    <div class="team-member">
+      <p class="member-role">Co-Editor-in-Chief</p>
+      <h3 class="member-title">Shaurya Seth</h3>
+      <p class="member-desc">Founder. Editorial direction and operational oversight.</p>
+      <p class="member-placeholder">Bio coming soon</p>
+    </div>
+    <div class="team-member">
+      <p class="member-role">Co-Editor-in-Chief</p>
+      <h3 class="member-title">Aadya Mishra</h3>
+      <p class="member-desc">Co-founder. Editorial direction and strategic vision.</p>
+      <p class="member-placeholder">Bio coming soon</p>
+    </div>
+    <div class="team-member">
+      <p class="member-role">Coming Soon</p>
+      <h3 class="member-title">TBD</h3>
+      <p class="member-desc">Additional leadership role to be filled.</p>
+      <p class="member-placeholder">Recruitment in progress</p>
+    </div>
+  </div>
+</section>
+
+<section class="team-section">
+  <h2>Core Team</h2>
+  <div class="team-grid">
+    <div class="team-member">
+      <p class="member-role">Investigative Researcher</p>
+      <h3 class="member-title">Position 1</h3>
+      <p class="member-desc">Story pitches, evidence gathering, source collection, and first-draft writing.</p>
+      <p class="member-placeholder">Recruitment in progress</p>
+    </div>
+    <div class="team-member">
+      <p class="member-role">Investigative Researcher</p>
+      <h3 class="member-title">Position 2</h3>
+      <p class="member-desc">Story pitches, evidence gathering, source collection, and first-draft writing.</p>
+      <p class="member-placeholder">Recruitment in progress</p>
+    </div>
+    <div class="team-member">
+      <p class="member-role">Investigative Researcher</p>
+      <h3 class="member-title">Position 3</h3>
+      <p class="member-desc">Story pitches, evidence gathering, source collection, and first-draft writing.</p>
+      <p class="member-placeholder">Recruitment in progress</p>
+    </div>
+    <div class="team-member">
+      <p class="member-role">OSINT & Data Analyst</p>
+      <h3 class="member-title">Position 1</h3>
+      <p class="member-desc">Open-source intelligence, data sets, and digital trail analysis.</p>
+      <p class="member-placeholder">Recruitment in progress</p>
+    </div>
+    <div class="team-member">
+      <p class="member-role">Fact-Checker</p>
+      <h3 class="member-title">Position 1</h3>
+      <p class="member-desc">Every claim, every source, every number — independently verified.</p>
+      <p class="member-placeholder">Recruitment in progress</p>
+    </div>
+    <div class="team-member">
+      <p class="member-role">Digital Manager</p>
+      <h3 class="member-title">Position 1</h3>
+      <p class="member-desc">Formats and publishes reports, manages the website and social platforms.</p>
+      <p class="member-placeholder">Recruitment in progress</p>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo"><span class="dot"></span>Motion Desk</div>
+  <p class="footer-note">Independent. Evidence-based. Always in motion.</p>
+  <div class="footer-links">
+    <a href="/">Home</a>
+    <a href="/#about">About</a>
+    <a href="/#focus">Coverage</a>
+    <a href="/team/">Team</a>
+    <a href="https://instagram.com/themotiondesk" target="_blank">Instagram</a>
+  </div>
+</footer>
+
+<script>
+  const nav = document.getElementById('nav');
+  window.addEventListener('scroll', () => { nav.classList.toggle('scrolled', window.scrollY > 20); });
+</script>
+</body>
+</html>
