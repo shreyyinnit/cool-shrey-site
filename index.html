@@ -29,6 +29,8 @@
       
       --gazette-bg: #0D0D0D;
       --gazette-text: #F8F8F8;
+      --gazette-light-bg: #F5F0E8;
+      --gazette-light-text: #1A1714;
       
       --perspective-bg: #0d1a10; /* Deepest Forest */
       --perspective-text: #FAFAF8;
@@ -148,6 +150,19 @@
     .reader-body { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 300; line-height: 2; color: rgba(250,250,248,0.7); letter-spacing: 0.01em; }
     .reader-body p { margin-bottom: 2.5rem; }
 
+    /* GAZETTE DARK / LIGHT MODE */
+    .gazette-controls { display: flex; align-items: center; gap: 14px; margin-top: 34px; }
+    .gazette-mode-note { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.5; }
+    .gazette-theme-toggle { border: 1px solid rgba(255,255,255,0.25); background: transparent; color: inherit; padding: 11px 15px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: background 0.3s, color 0.3s, border-color 0.3s; }
+    .gazette-theme-toggle:hover { background: rgba(255,255,255,0.1); border-color: currentColor; }
+    .reader-theme-toggle { position: fixed; top: 40px; left: 60px; z-index: 2; }
+    .gazette-light .gazette-theme-toggle { border-color: rgba(26,23,20,0.3); }
+    .gazette-light .gazette-theme-toggle:hover { background: rgba(26,23,20,0.08); }
+    .gazette-light .reader-title { color: var(--gazette-light-text); }
+    .gazette-light .reader-body { color: rgba(26,23,20,0.76); }
+    .gazette-light .reader-body strong { color: var(--gazette-light-text); }
+    .gazette-light .reader-close { color: var(--gazette-light-text); opacity: 0.65; }
+
     /* DESK / ABOUT */
     .founder-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; margin-top: 60px; }
     .founder-card { padding: 40px; border: 1px solid var(--border-subtle); background: rgba(255,255,255,0.02); }
@@ -230,6 +245,10 @@
         <span class="wing-label">WING_01 // MEDIA</span>
         <h1 class="wing-h1">The Gazette</h1>
         <p class="wing-p">Sharp reporting, editorial analysis, and the stories that shape the conversation. We value depth over speed.</p>
+        <div class="gazette-controls">
+          <button class="gazette-theme-toggle" id="gazette-theme-toggle" type="button" onclick="toggleGazetteTheme()" aria-pressed="false">Switch to light</button>
+          <span class="gazette-mode-note" id="gazette-mode-note">Ink mode</span>
+        </div>
       </div>
       <div class="content-section">
         <div class="content-grid">
@@ -431,6 +450,7 @@
 
   <!-- ESSAY READER -->
   <div class="essay-reader" id="reader">
+    <button class="gazette-theme-toggle reader-theme-toggle" id="reader-theme-toggle" type="button" onclick="toggleGazetteTheme()" aria-pressed="false" hidden>Switch to light</button>
     <div class="reader-close" onclick="closeEssay()">[ CLOSE_READER ]</div>
     <div class="reader-container">
       <h1 class="reader-title" id="reader-title">Title</h1>
@@ -569,8 +589,11 @@
         document.documentElement.style.setProperty('--current-bg', 'var(--home-bg)');
         document.documentElement.style.setProperty('--current-text', 'var(--home-text)');
       } else if (id === 'gazette') {
-        document.documentElement.style.setProperty('--current-bg', 'var(--gazette-bg)');
-        document.documentElement.style.setProperty('--current-text', 'var(--gazette-text)');
+        const light = localStorage.getItem('gazette-theme') === 'light';
+        body.classList.toggle('gazette-light', light);
+        document.documentElement.style.setProperty('--current-bg', light ? 'var(--gazette-light-bg)' : 'var(--gazette-bg)');
+        document.documentElement.style.setProperty('--current-text', light ? 'var(--gazette-light-text)' : 'var(--gazette-text)');
+        updateGazetteThemeControls();
       } else if (id === 'perspective') {
         document.documentElement.style.setProperty('--current-bg', 'var(--perspective-bg)');
         document.documentElement.style.setProperty('--current-text', 'var(--perspective-text)');
@@ -593,9 +616,14 @@
       const reader = document.getElementById('reader');
       // Use wing-specific background for reader
       const activeModule = document.querySelector('.module.active').id;
+      reader.dataset.readerModule = activeModule;
+      const readerThemeToggle = document.getElementById('reader-theme-toggle');
+      readerThemeToggle.hidden = activeModule !== 'gazette';
       if (activeModule === 'gazette') {
-        reader.style.backgroundColor = 'var(--gazette-bg)';
-        reader.style.color = 'var(--gazette-text)';
+        const light = document.body.classList.contains('gazette-light');
+        reader.style.backgroundColor = light ? 'var(--gazette-light-bg)' : 'var(--gazette-bg)';
+        reader.style.color = light ? 'var(--gazette-light-text)' : 'var(--gazette-text)';
+        updateGazetteThemeControls();
       } else {
         reader.style.backgroundColor = 'var(--perspective-bg)';
         reader.style.color = 'var(--perspective-text)';
@@ -606,8 +634,37 @@
     }
 
     function closeEssay() {
-      document.getElementById('reader').classList.remove('active');
+      const reader = document.getElementById('reader');
+      reader.classList.remove('active');
+      reader.dataset.readerModule = '';
+      document.getElementById('reader-theme-toggle').hidden = true;
       document.body.style.overflow = 'auto';
+    }
+
+    function updateGazetteThemeControls() {
+      const light = document.body.classList.contains('gazette-light');
+      const label = light ? 'Switch to dark' : 'Switch to light';
+      const mode = light ? 'Cream mode' : 'Ink mode';
+      document.querySelectorAll('.gazette-theme-toggle').forEach(button => {
+        button.innerText = label;
+        button.setAttribute('aria-pressed', String(light));
+      });
+      const note = document.getElementById('gazette-mode-note');
+      if (note) note.innerText = mode;
+    }
+
+    function toggleGazetteTheme() {
+      const light = !document.body.classList.contains('gazette-light');
+      document.body.classList.toggle('gazette-light', light);
+      localStorage.setItem('gazette-theme', light ? 'light' : 'dark');
+      document.documentElement.style.setProperty('--current-bg', light ? 'var(--gazette-light-bg)' : 'var(--gazette-bg)');
+      document.documentElement.style.setProperty('--current-text', light ? 'var(--gazette-light-text)' : 'var(--gazette-text)');
+      const reader = document.getElementById('reader');
+      if (reader.classList.contains('active') && reader.dataset.readerModule === 'gazette') {
+        reader.style.backgroundColor = light ? 'var(--gazette-light-bg)' : 'var(--gazette-bg)';
+        reader.style.color = light ? 'var(--gazette-light-text)' : 'var(--gazette-text)';
+      }
+      updateGazetteThemeControls();
     }
 
     function handleMailSubmit(event, subject) {
