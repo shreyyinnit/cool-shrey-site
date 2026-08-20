@@ -4,6 +4,20 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>The Motion Desk — Creative Complex</title>
+  <meta name="description" content="The Motion Desk is an independent creative complex for sharp media, long-form ideas, and thoughtful experimentation.">
+  <meta name="robots" content="index,follow">
+  <meta name="theme-color" content="#F5F0E8">
+  <link rel="canonical" href="https://themotiondesk.netlify.app/">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="The Motion Desk">
+  <meta property="og:title" content="The Motion Desk — Creative Complex">
+  <meta property="og:description" content="Independent media, long-form ideas, and thoughtful experimentation.">
+  <meta property="og:url" content="https://themotiondesk.netlify.app/">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="The Motion Desk — Creative Complex">
+  <meta name="twitter:description" content="Independent media, long-form ideas, and thoughtful experimentation.">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","name":"The Motion Desk","url":"https://themotiondesk.netlify.app/","email":"themotiondesk@gmail.com","sameAs":["https://instagram.com/themotiondesk"]},{"@type":"WebSite","name":"The Motion Desk","url":"https://themotiondesk.netlify.app/","publisher":{"@type":"Organization","name":"The Motion Desk"}}]}</script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@200;300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -107,7 +121,6 @@
       transition: background 0.45s ease, border-color 0.45s ease, color 0.45s ease;
     }
     body.perspective-active .nav { background: rgba(9,20,8,0.56); backdrop-filter: blur(18px); border-bottom: 1px solid rgba(107,143,113,0.16); }
-    body.reader-open .nav { opacity: 0; pointer-events: none; }
     
     .nav-logo { font-family: var(--font-mono); font-size: 11px; letter-spacing: 0.4em; cursor: pointer; color: inherit; white-space: nowrap; }
     .nav-links { display: flex; gap: 32px; align-items: center; }
@@ -144,6 +157,7 @@
     .card { position: relative; padding: 0 28px 40px 0; border-bottom: 1px solid var(--border-subtle); cursor: pointer; transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease; }
     .card:hover, .card:focus-visible { transform: translateX(10px); border-color: color-mix(in srgb, var(--current-text) 34%, transparent); }
     #gazette .card::after { content: 'READ ↗'; position: absolute; right: 0; top: 0; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.15em; opacity: 0; transform: translateX(-5px); transition: opacity 0.25s ease, transform 0.25s ease; }
+    #gazette a.card { display: block; color: inherit; text-decoration: none; }
     #gazette .card:hover::after, #gazette .card:focus-visible::after { opacity: 0.65; transform: translateX(0); }
     .card-meta { font-family: var(--font-mono); font-size: 10px; opacity: 0.6; margin-bottom: 20px; display: flex; gap: 20px; }
     .card-title { font-family: var(--font-display); font-size: 32px; margin-bottom: 16px; }
@@ -181,38 +195,19 @@
     .perspective-time-label { width: 100%; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--sage); margin-bottom: 8px; }
     .perspective-time-button { border: 1px solid rgba(107,143,113,0.35); background: rgba(10,26,13,0.24); color: inherit; padding: 10px 13px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
     .perspective-time-button:hover, .perspective-time-button.active { border-color: var(--sage); background: rgba(107,143,113,0.22); color: #f4f0df; }
-    .reader-perspective-picker { position: fixed; top: 34px; left: 60px; z-index: 2; justify-content: flex-start; max-width: 410px; }
-    .reader-perspective-picker .perspective-time-label { width: auto; margin: 0 8px 0 0; }
 
-    .featured-essay { border: 1px solid rgba(107,143,113,0.2); padding: 4rem; margin-bottom: 2rem; background: rgba(10,26,13,0.4); backdrop-filter: blur(20px); cursor: pointer; transition: 0.4s; }
+    .featured-essay { display: block; color: inherit; text-decoration: none; border: 1px solid rgba(107,143,113,0.2); padding: 4rem; margin-bottom: 2rem; background: rgba(10,26,13,0.4); backdrop-filter: blur(20px); cursor: pointer; transition: 0.4s; }
     .featured-essay:hover { border-color: var(--sage); background: rgba(10,26,13,0.6); transform: translateY(-5px); }
     .featured-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.3em; color: var(--sage); margin-bottom: 1.5rem; display: block; }
     .featured-title { font-family: var(--font-serif); font-size: 2.5rem; line-height: 1.2; margin-bottom: 1.5rem; }
     .featured-excerpt { font-family: var(--font-serif); font-size: 1.2rem; font-style: italic; opacity: 0.4; line-height: 1.8; margin-bottom: 2rem; }
 
-    /* ESSAY READER */
-    .essay-reader { position: fixed; inset: 0; background: var(--perspective-bg); z-index: 2000; display: none; overflow-y: auto; padding: 120px 2rem; }
-    .essay-reader.active { display: block; }
-    .reader-close { position: fixed; top: 40px; right: 60px; background: transparent; border: 0; font-family: var(--font-mono); font-size: 10px; cursor: pointer; letter-spacing: 0.3em; color: inherit; opacity: 0.55; transition: opacity 0.3s ease, transform 0.3s ease; }
-    .reader-close:hover, .reader-close:focus-visible { opacity: 1; transform: translateX(-3px); }
-    .reader-container { max-width: 760px; margin: 0 auto; animation: reader-enter 0.65s 0.08s cubic-bezier(0.22, 1, 0.36, 1) both; }
-    @keyframes reader-enter { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
-    .reader-title { font-family: var(--font-serif); font-size: clamp(2.5rem, 6vw, 4rem); font-weight: 300; line-height: 1.1; margin-bottom: 4rem; color: var(--perspective-text); }
-    .reader-body { font-family: var(--font-serif); font-size: 1.25rem; font-weight: 300; line-height: 2; color: rgba(250,250,248,0.7); letter-spacing: 0.01em; }
-    .reader-body p { margin-bottom: 2.5rem; }
 
     /* GAZETTE DARK / LIGHT MODE */
     .gazette-controls { display: flex; align-items: center; gap: 14px; margin-top: 34px; }
     .gazette-mode-note { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.5; }
     .gazette-theme-toggle { border: 1px solid rgba(255,255,255,0.25); background: transparent; color: inherit; padding: 11px 15px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase; cursor: pointer; transition: background 0.3s, color 0.3s, border-color 0.3s; }
     .gazette-theme-toggle:hover { background: rgba(255,255,255,0.1); border-color: currentColor; }
-    .reader-theme-toggle { position: fixed; top: 40px; left: 60px; z-index: 2; }
-    .gazette-light .gazette-theme-toggle { border-color: rgba(26,23,20,0.3); }
-    .gazette-light .gazette-theme-toggle:hover { background: rgba(26,23,20,0.08); }
-    .gazette-light .reader-title { color: var(--gazette-light-text); }
-    .gazette-light .reader-body { color: rgba(26,23,20,0.76); }
-    .gazette-light .reader-body strong { color: var(--gazette-light-text); }
-    .gazette-light .reader-close { color: var(--gazette-light-text); opacity: 0.65; }
 
     /* DESK / ABOUT */
     .founder-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 40px; margin-top: 60px; }
@@ -239,10 +234,6 @@
       .module { padding-top: 68px; }
       .home, .wing-hero, .content-section, .pitch-section, .footer { padding: 60px 30px; }
       .featured-essay { padding: 2rem; }
-      .reader-close { top: 24px; right: 24px; }
-      .reader-theme-toggle { top: 20px; left: 24px; }
-      .reader-perspective-picker { top: 18px; left: 20px; max-width: calc(100vw - 112px); }
-      .reader-perspective-picker .perspective-time-label { display: none; }
     }
 
     @media (max-width: 580px) {
@@ -258,7 +249,6 @@
       .pitch-heading { font-size: 40px; }
       .footer { align-items: flex-start; flex-direction: column; gap: 20px; }
       .footer-links { flex-wrap: wrap; gap: 16px; }
-      .reader-perspective-picker { display: grid; grid-template-columns: repeat(2, auto); gap: 6px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -332,26 +322,26 @@
       </div>
       <div class="content-section">
         <div class="content-grid">
-          <div class="card" role="button" tabindex="0" aria-label="Read The Architecture of Attention" onclick="openEssay('attention')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openEssay('attention')}">
+          <a class="card" href="/gazette/the-architecture-of-attention/" aria-label="Read The Architecture of Attention">
             <div class="card-meta"><span>COVER STORY</span><span>APR 28, 2026</span></div>
             <h3 class="card-title">The Architecture of Attention</h3>
             <p class="card-desc">How media learned to manufacture urgency in an era of infinite scroll and algorithmic feeds.</p>
-          </div>
-          <div class="card" role="button" tabindex="0" aria-label="Read Why Every Brand Sounds the Same" onclick="openEssay('brands')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openEssay('brands')}">
+          </a>
+          <a class="card" href="/gazette/why-every-brand-sounds-the-same/" aria-label="Read Why Every Brand Sounds the Same">
             <div class="card-meta"><span>ANALYSIS</span><span>APR 26, 2026</span></div>
             <h3 class="card-title">Why Every Brand Sounds the Same</h3>
             <p class="card-desc">The homogenization of corporate voice and what it means for authentic communication.</p>
-          </div>
-          <div class="card" role="button" tabindex="0" aria-label="Read The Newsletter Economy" onclick="openEssay('newsletter')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openEssay('newsletter')}">
+          </a>
+          <a class="card" href="/gazette/the-newsletter-economy/" aria-label="Read The Newsletter Economy">
             <div class="card-meta"><span>REPORTING</span><span>APR 24, 2026</span></div>
             <h3 class="card-title">The Newsletter Economy</h3>
             <p class="card-desc">Independent writers are building sustainable businesses outside legacy media structures.</p>
-          </div>
-          <div class="card" role="button" tabindex="0" aria-label="Read Inside Content Factories" onclick="openEssay('factories')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openEssay('factories')}">
+          </a>
+          <a class="card" href="/gazette/inside-content-factories/" aria-label="Read Inside Content Factories">
             <div class="card-meta"><span>FEATURE</span><span>APR 22, 2026</span></div>
             <h3 class="card-title">Inside Content Factories</h3>
             <p class="card-desc">A look at the invisible infrastructure behind the posts that fill your feed every morning.</p>
-          </div>
+          </a>
         </div>
       </div>
 
@@ -404,12 +394,12 @@
         </div>
       </div>
       <div class="content-section" style="padding-top:0;">
-        <div class="featured-essay" onclick="openEssay('slowness')">
+        <a class="featured-essay" href="/perspective/notes-on-slowness-as-a-creative-practice/" aria-label="Read Notes on Slowness as a Creative Practice">
           <span class="featured-label">Featured Essay</span>
           <h2 class="featured-title">Notes on Slowness as a Creative Practice</h2>
           <p class="featured-excerpt">"Slowness, then, feels like rebellion. Not the loud kind. The quiet, stubborn kind."</p>
           <div style="font-family:var(--font-mono); font-size:9px; color:var(--sage); letter-spacing:0.1em;">Shaurya Seth · 12 min read</div>
-        </div>
+        </a>
         <div class="content-grid">
           <div class="card">
             <div class="card-meta"><span>OPINION</span><span>APRIL 2026</span></div>
@@ -535,139 +525,8 @@
     </footer>
   </div>
 
-  <!-- ESSAY READER -->
-  <div class="essay-reader" id="reader">
-    <button class="gazette-theme-toggle reader-theme-toggle" id="reader-theme-toggle" type="button" onclick="toggleGazetteTheme()" aria-pressed="false" hidden>Switch to light</button>
-    <div class="perspective-time-picker reader-perspective-picker" id="reader-perspective-controls" aria-label="Perspective atmosphere" hidden>
-      <span class="perspective-time-label">Atmosphere</span>
-      <button class="perspective-time-button" type="button" data-perspective-time="morning" onclick="setPerspectiveTime('morning')">Morning</button>
-      <button class="perspective-time-button" type="button" data-perspective-time="day" onclick="setPerspectiveTime('day')">Daytime</button>
-      <button class="perspective-time-button" type="button" data-perspective-time="night" onclick="setPerspectiveTime('night')">Night</button>
-      <button class="perspective-time-button" type="button" data-perspective-time="midnight" onclick="setPerspectiveTime('midnight')">Midnight</button>
-    </div>
-    <button class="reader-close" type="button" onclick="closeEssay()">[ CLOSE_READER ]</button>
-    <div class="reader-container">
-      <h1 class="reader-title" id="reader-title">Title</h1>
-      <div class="reader-body" id="reader-body">
-        <!-- Content injected via JS -->
-      </div>
-    </div>
-  </div>
 
   <script>
-    const essays = {
-      slowness: {
-        title: "Notes on Slowness as a Creative Practice",
-        content: `
-          <p>There is something almost offensive about moving slowly in a world that has built its entire personality around speed. Everything is instant, everything is optimized, everything is screaming at you to produce, post, perform, repeat. You open your phone and it is just an endless conveyor belt of people being talented faster than you, funnier than you, more consistent than you, more everything than you. And somewhere in that chaos, creativity quietly starts suffocating. Not dramatically. Not all at once. Just a slow, almost polite kind of suffocation.</p>
-          <p>Slowness, then, feels like rebellion. Not the loud kind. Not the kind that gets claps and reposts. The quiet, stubborn kind. The kind where you sit with something longer than is considered efficient. Where you let an idea exist in its unfinished, slightly ugly, confusing form without immediately forcing it to become content.</p>
-          <p>Because that is what most of us are doing now. We are not creating. We are converting. Taking half-formed thoughts and rushing them into something consumable before they even understand themselves. It is like forcing a sentence to end before it knows what it is trying to say. And then we wonder why everything feels hollow, repetitive, slightly off.</p>
-          <p>Slowness interrupts that cycle. It forces you to stay.</p>
-          <p>To stay with confusion. To stay with boredom. To stay with the uncomfortable phase where nothing is clicking and everything feels pointless. And that phase is deeply, viscerally irritating because it does not reward you. There are no likes for sitting with a blank page. There is no applause for thinking. It feels like failure, like wasted time, like you are falling behind some invisible race that everyone else seems to be winning.</p>
-          <p>But that "wasted" time is where the actual work is happening.</p>
-          <p>Creativity is not the moment of output. It is the slow accumulation of noticing. The way a random conversation sticks in your head for days. The way a color combination bothers you for no reason until suddenly it makes sense in a completely different context. The way an idea mutates quietly in the background while you are doing something entirely unrelated. None of that happens on demand. None of that happens quickly.</p>
-          <p>And yet we keep trying to force it.</p>
-          <p>We treat creativity like a machine. Input effort, output result. But it behaves more like a living thing. It needs space, time, inconsistency. It needs you to leave it alone sometimes. It needs you to not constantly interrogate it like "are you done yet, are you good yet, are you worthy yet." Because the moment you do that, it freezes. It performs instead of evolving.</p>
-          <p>Slowness gives creativity room to breathe without being watched.</p>
-          <p>There is also something deeply personal about moving slowly. When you rush, you default. You rely on patterns, trends, things that have already worked before. You imitate without even realizing it because there is no time to question anything. But when you slow down, you start noticing your own instincts. Your weird preferences. The things you cannot explain but keep coming back to anyway.</p>
-          <p>And that is where originality actually comes from. Not from trying to be different, but from having enough time to notice what is already uniquely yours.</p>
-          <p>Slowness is also uncomfortable because it removes distraction. When you are not rushing, you are left alone with your own thoughts. And those thoughts are not always fun. They are messy, contradictory, sometimes embarrassingly honest. But avoiding them is how we end up making things that look like everyone else's. We use speed as a shield against ourselves.</p>
-          <p>So, slow down. Not because it is efficient. Not because it will make you more productive in the long run (though it might). But because your work deserves to be more than just a conversion of effort. It deserves to be an evolution of thought.</p>
-          <p>And that takes as long as it takes.</p>
-        `
-      },
-      attention: {
-        title: "The Architecture of Attention",
-        content: `
-          <p>There is a version of the internet that never existed but that we all remember anyway — slower, quieter, made of pages you had to find. You typed an address into a browser bar and arrived somewhere specific. The experience had geography. You came, you read, you left. The relationship between you and information had edges.</p>
-          <p>That internet is gone now. What replaced it doesn't have pages so much as streams — continuous, ambient, designed to be entered but never quite exited. The scroll doesn't end. The feed refreshes. The notification arrives. And somewhere in that shift, something happened to attention itself: it stopped being something you gave and became something that was taken.</p>
-          <p>This is a story about how that happened. Not as accident, not as side effect, but as deliberate architecture. The manufacture of urgency — the engineering of the feeling that something is always happening, that you are always moments away from missing it — is the defining media achievement of the last two decades. Understanding it is increasingly a matter of basic literacy.</p>
-          <p><strong>I. The Commodity That Wasn't</strong></p>
-          <p>In the early years of the commercial internet, the prevailing theory was that attention was abundant. There was so much of it, and content was so scarce, that the challenge was producing enough material to meet demand. The business model followed: charge for access, charge for content, and the audience — grateful, captive — would pay.</p>
-          <p>That theory collapsed faster than anyone expected. The network effect, the culture of shareability, the browser's indifference to paywalls in their early forms — all of it conspired to make content feel free. And when content feels free, attention becomes the scarce resource. The economic logic inverted overnight.</p>
-          <p>What followed was the attention economy, a term popularized by psychologist and Nobel laureate Herbert Simon, who noted as early as 1971 that "a wealth of information creates a poverty of attention." Simon was writing about organizational decision-making. He could not have anticipated that his observation would become the founding logic of a trillion-dollar industry.</p>
-          <p>The attention economy treats human focus the way extractive industries treat natural resources: as something to be located, harvested, and sold. Advertisers pay platforms not for space but for eyes — specifically, for the assurance that a particular pair of eyes will be looking at a particular thing at a particular moment. The platform's entire business is the management of that transaction. Everything else — the content, the community, the conversation — is infrastructure for the harvest.</p>
-          <p><strong>II. The Neuroscience of the Scroll</strong></p>
-          <p>To understand why the feed works the way it does, it helps to understand something about how the brain processes novelty. The human nervous system evolved in an environment where new stimuli were meaningful. A rustle in the grass could be a predator. A shift in the wind carried information. The brain developed a powerful response to novelty — a shot of dopamine, a sharpening of focus, a reorientation of resources toward the new thing.</p>
-          <p>Platform designers did not invent this response. But they became extraordinarily skilled at exploiting it. The variable reward schedule — the same mechanism that makes slot machines addictive — was built into the pull-to-refresh gesture. You don't know if the next scroll will bring something interesting or nothing at all. The uncertainty is the engine. Your brain keeps pulling the lever because sometimes there's a reward, and the not-knowing is enough to sustain the behavior indefinitely.</p>
-          <p><strong>III. The Manufacture of Now</strong></p>
-          <p>One of the most consequential things the attention economy did to media was its relationship with time. Traditional journalism had a rhythm. The morning paper arrived. The evening news aired at six. There were deadlines, and deadlines created a kind of temporal structure — a before and after, a today and yesterday.</p>
-          <p>The real-time web collapsed that gap entirely. Speed became a value, not just a competitive pressure. This created a structural incentive for incomplete information. A story that unfolds over twelve hours of live coverage, with each partial update treated as news, generates twelve hours of engagement. The same story told once, correctly and completely, generates one article. From the platform's perspective, the first is worth twelve times the second.</p>
-          <p><strong>IV. Algorithmic Curation and the Death of the Accidental</strong></p>
-          <p>For most of the history of mass media, the act of encountering information was partly random. You picked up a newspaper and read whatever was on the front page. The algorithmic feed replaced editorial judgment with behavioral prediction. Instead of asking "what should people read," it asks "what will this particular person click on, given everything we know about what they have clicked on before?"</p>
-          <p>The attention economy depends on this dynamic because familiarity is comfortable and comfort keeps people scrolling. Discomfort — the experience of encountering a genuinely challenging perspective — is not good for engagement. It makes people put their phones down. The algorithm has no reason to generate discomfort, and many reasons not to.</p>
-          <p><strong>V. The Viral Emotion</strong></p>
-          <p>In 2014, a team of researchers at Facebook published a paper that should have prompted more outrage than it did. They had conducted an experiment on approximately 700,000 users without their knowledge or consent, manipulating the emotional valence of what appeared in their feeds. The conclusion: emotions are contagious through social networks. What you see affects what you feel, and what you feel affects what you post.</p>
-          <p>The manufacture of urgency is, at its root, an emotional technology. It works by keeping the nervous system slightly but persistently activated — never quite alarmed enough to act, never quite calm enough to disengage. The scroll is the idle state of this condition. You're available. You're in the feed. And the feed, as it always does, has something for you.</p>
-          <p><strong>VI. What Slow Media Looks Like</strong></p>
-          <p>Slow media — a phrase borrowed from the slow food movement — describes an approach to information consumption that prioritizes depth over volume, context over recency, and editorial judgment over algorithmic curation. It is not a technology but a set of practices. Reading longer pieces rather than scanning headlines. Following sources you trust rather than feeds that aggregate everything.</p>
-          <p>The architecture of attention is real. It was built on purpose. And you are inside it, right now, reading this — which is worth something. The act of sustained reading, in this environment, is a mild form of resistance. Not sufficient resistance, not a solution, but a beginning: the practice of staying with something long enough to understand it.</p>
-        `
-      },
-      brands: {
-        title: "Why Every Brand Sounds the Same",
-        content: `
-          <p>There is a tone you will recognize immediately if you have spent any time on the internet in the last decade. It is warm but not intimate. Casual but not careless. Self-aware but not self-deprecating to the point of undermining confidence. It uses sentence fragments for emphasis. It asks rhetorical questions and then answers them. It is relentlessly, exhaustingly positive.</p>
-          <p>This tone has no single author. It emerged from a convergence of incentives, anxieties, and imitations that compounded over time until what had once been a choice became an assumption. It is the voice of the startup, the DTC brand, the challenger category disruptor. It is everywhere, and it is — if you listen carefully — saying almost nothing at all.</p>
-          <p><strong>I. The Sound of Safety</strong></p>
-          <p>A brand's voice is, in theory, the expression of a coherent identity. In practice, it is often the output of a committee process designed primarily to avoid saying anything that could be criticized. The result is voice by subtraction. You remove anything too specific, too opinionated, too strange, or too formal. What remains is a kind of residue — not quite personality, but the shape left behind when personality has been carefully excised.</p>
-          <p><strong>II. The Millennial Pivot and Its Afterlife</strong></p>
-          <p>The homogenization of brand voice has a traceable origin point: the rise of direct-to-consumer brands in the early 2010s. Companies like Warby Parker and Casper were selling directly through the internet, which meant voice became the product. They adopted a tone that performed the absence of corporate calculation: conversational, slightly irreverent, and ironically self-aware.</p>
-          <p>It worked remarkably well. But then every other brand noticed. The aesthetic diffused. The wink became a convention. By the middle of the decade, legacy brands were retooling their communications to sound like startups, and the voice that had signified authenticity became, through its ubiquity, the most reliable signal of inauthenticity.</p>
-          <p><strong>III. The Algorithm Shaped the Message</strong></p>
-          <p>The homogenization of brand voice was accelerated by the platforms. When Facebook rewarded emotional engagement, brands learned to write emotionally. When LinkedIn surfaced personal failure stories, brands began writing in that register. The platforms were not asking brands to sound the same; they were asking them to optimize for engagement. The emergent result was convergence.</p>
-          <p><strong>IV. Purpose, and the Collapse of Purpose</strong></p>
-          <p>The 2010s also brought the rise of brand purpose — the idea that companies needed to stand for something beyond their products. When purpose is decorative rather than operational, it reads as what it is: a bid for trust that hasn't been earned through conduct. Directness is its own form of respect. A company that makes a good product and wants you to buy it has a kind of integrity that the elaborate performance of purpose tends to undermine.</p>
-          <p><strong>V. The Copywriter and the Content Machine</strong></p>
-          <p>Corporate communication is produced by people operating within institutional constraints. The institutional processes that mediate between a writer's ability and the final output are frequently terrible at producing writing that sounds like a person wrote it. The voice that emerges is the voice of the process itself. Generative AI has made this dynamic both more efficient and more visible, raising the question of what the voice was for in the first place.</p>
-          <p><strong>VI. What Differentiation Actually Requires</strong></p>
-          <p>The brands that manage to sound distinct tend to have a willingness to be specific. Specificity is the enemy of the homogenized brand voice because specificity requires commitment. To say something specific is to say something that is true for you and potentially not true for someone else — which means potentially alienating someone.</p>
-          <p><strong>VII. The Cost of Sameness</strong></p>
-          <p>Trust is built through specific, accurate, consistent communication over time. When brand voice is generic, the signals it sends are generic — and generic signals are indistinguishable from signals that have been engineered to produce a particular response. The broader cost is to the public language of commercial life. When words like 'authentic' or 'community' are systematically emptied of meaning, they become unavailable for uses where they might mean something.</p>
-        `
-      },
-      newsletter: {
-        title: "The Newsletter Economy",
-        content: `
-          <p>Sometime in the early 2020s, a peculiar thing happened to the email newsletter — a format so old it predates the social web — and it became the most interesting place in media. It became the place where the economics of writing were being quietly renegotiated, where writers were discovering that it was possible to make a living by writing directly for the people who wanted to read them.</p>
-          <p><strong>I. What Legacy Media Did to Writing</strong></p>
-          <p>The economics of journalism for most of the twentieth century were a kind of managed dependency. Publications existed because advertising made them viable. The digital transition made this worse. When advertising moved to platforms like Google and Facebook, the revenue base for serious journalism collapsed. The model broke, leaving behind a generation of skilled writers who understood that institutional structures were not permanent.</p>
-          <p><strong>II. The Substack Moment</strong></p>
-          <p>The proximate cause was Substack, which made it technically trivial to charge readers a subscription fee for email content. The timing was precise. Substack launched at the exact moment when a critical mass of journalists were looking for alternatives. The math was simple: a writer with a loyal audience could make more independently than in almost any staff writing job in media.</p>
-          <p><strong>III. The Reader Relationship</strong></p>
-          <p>What the newsletter economy changed was the nature of the relationship between writer and reader. Legacy media relationships are mediated by institutions. The newsletter strips that frame away. What remains is a direct, intimate relationship. Subscriber retention turns out to be dramatically higher for newsletters from individual writers because the reader is paying for a specific person's thinking.</p>
-          <p><strong>IV. The Niche Is the Product</strong></p>
-          <p>The newsletter economy has rehabilitated the niche. Subscription economics allow a newsletter about a specific, narrow subject to be financially viable with a few thousand paying subscribers. The infrastructure for independent publishing has reached places that legacy media, optimized for mass audiences, never reached.</p>
-          <p><strong>V. The Business of Independence</strong></p>
-          <p>The economics are real, but they are not simple. The writers who succeeded most visibly had pre-existing audiences. Starting from scratch is a genuinely different challenge where discovery is the fundamental problem. Independence also comes with full costs — administrative overhead, health insurance, and the loss of institutional access.</p>
-          <p><strong>VI. What Happens to Editorial Standards</strong></p>
-          <p>Critics often raise the question of editorial standards. Who fact-checks the independent writer? The honest answer is: it depends. The best maintain rigorous standards because their reputation is their only asset. But the ecosystem also contains writers operating without editorial constraints, making reader literacy more important than ever.</p>
-          <p><strong>VII. The Shape of What's Coming</strong></p>
-          <p>The newsletter economy is still young. It is not the replacement of legacy media, but something alongside it — a parallel ecosystem where different things are possible. The writing that finds audiences here is more various, more specific, and more willing to take risks. The appetite for serious writing found another form: it ended up in your inbox.</p>
-        `
-      },
-      factories: {
-        title: "Inside Content Factories",
-        content: `
-          <p>At some point this morning, before you were fully awake, the content was already being made. Not written — made. In cities where the cost of skilled English-language labor is low, teams are producing the articles, listicles, and trend pieces that fill your feed. They work from briefs derived from keyword research. This is the content factory — the invisible industrial infrastructure behind the modern internet.</p>
-          <p><strong>I. The Factory Floor</strong></p>
-          <p>The input is almost never an idea; it is a keyword identified by search volume tools. From the keyword comes the brief, a template specifying headings, word count, and SEO requirements. The filling is done by a tiered workforce, from freelance writers paid by the word to content managers overseeing production pipelines. The writer's job is to fill the template.</p>
-          <p><strong>II. The Scale of the Operation</strong></p>
-          <p>Consider a mid-sized content site publishing twenty to forty pieces per day. Over a decade, that's tens of thousands of articles. The economics depend on a portfolio model: a few winners subsidize the losers. Generative AI has altered this calculus, making production cheaper and faster, though the industry still largely relies on human editing for accuracy and usefulness.</p>
-          <p><strong>III. The Platform Relationship</strong></p>
-          <p>The content factory exists in a state of anxious dependency on platforms like Google. SEO is the practice of reverse-engineering the ranking algorithm. This creates an industry permanently oriented toward the algorithm rather than the reader. The question is not "what does the reader need" but "what does the algorithm reward."</p>
-          <p><strong>IV. The Human Cost</strong></p>
-          <p>The writers at the lower tiers describe declining rates and production pressures that leave little room for careful engagement. When writers are paid by the word for high volume, thorough research becomes economically irrational. The result is content that synthesizes existing top-ranking articles without verifying claims, leading to errors compounding across the web.</p>
-          <p><strong>V. The Aggregator Layer</strong></p>
-          <p>Above the factory sits the aggregator layer — social feeds and recommendation engines. These distribute content factory output by borrowing the credibility of more trusted environments. The reader consumes it without knowing the credibility is borrowed, completing a cycle of trust-exploitation.</p>
-          <p><strong>VI. The Counterforces</strong></p>
-          <p>Google's algorithm updates represent an ongoing effort to surface helpful content. However, the arms race between the algorithm and the factory continues. Reader-supported media represents a structural alternative, where economic pressure shifts toward reader satisfaction rather than algorithmic optimization.</p>
-          <p><strong>VII. What the Factory Made</strong></p>
-          <p>The content factory succeeded at making money, but the degradation of the information environment was an externality. It made a specific kind of reader — one trained to trust formatting over substance. Understanding how content gets to your screen is the beginning of deciding what to do about it.</p>
-        `
-      }
-    };
-
     function switchModule(id) {
       const nextModule = document.getElementById(id);
       if (!nextModule) return;
@@ -709,47 +568,6 @@
       window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
     }
 
-    function openEssay(id) {
-      const essay = essays[id];
-      if (!essay) return;
-      
-      document.getElementById('reader-title').innerText = essay.title;
-      document.getElementById('reader-body').innerHTML = essay.content;
-      
-      const reader = document.getElementById('reader');
-      // Use wing-specific background for reader
-      const activeModule = document.querySelector('.module.active').id;
-      reader.dataset.readerModule = activeModule;
-      const readerThemeToggle = document.getElementById('reader-theme-toggle');
-      const readerPerspectiveControls = document.getElementById('reader-perspective-controls');
-      readerThemeToggle.hidden = activeModule !== 'gazette';
-      readerPerspectiveControls.hidden = activeModule !== 'perspective';
-      if (activeModule === 'gazette') {
-        const light = document.body.classList.contains('gazette-light');
-        reader.style.backgroundColor = light ? 'var(--gazette-light-bg)' : 'var(--gazette-bg)';
-        reader.style.color = light ? 'var(--gazette-light-text)' : 'var(--gazette-text)';
-        updateGazetteThemeControls();
-      } else {
-        applyPerspectiveTime();
-        reader.style.backgroundColor = 'var(--current-bg)';
-        reader.style.color = 'var(--current-text)';
-      }
-      
-      reader.classList.add('active');
-      document.body.classList.add('reader-open');
-      document.body.style.overflow = 'hidden';
-    }
-
-    function closeEssay() {
-      const reader = document.getElementById('reader');
-      reader.classList.remove('active');
-      document.body.classList.remove('reader-open');
-      reader.dataset.readerModule = '';
-      document.getElementById('reader-theme-toggle').hidden = true;
-      document.getElementById('reader-perspective-controls').hidden = true;
-      document.body.style.overflow = 'auto';
-    }
-
     function updateGazetteThemeControls() {
       const light = document.body.classList.contains('gazette-light');
       const label = light ? 'Switch to dark' : 'Switch to light';
@@ -768,11 +586,6 @@
       localStorage.setItem('gazette-theme', light ? 'light' : 'dark');
       document.documentElement.style.setProperty('--current-bg', light ? 'var(--gazette-light-bg)' : 'var(--gazette-bg)');
       document.documentElement.style.setProperty('--current-text', light ? 'var(--gazette-light-text)' : 'var(--gazette-text)');
-      const reader = document.getElementById('reader');
-      if (reader.classList.contains('active') && reader.dataset.readerModule === 'gazette') {
-        reader.style.backgroundColor = light ? 'var(--gazette-light-bg)' : 'var(--gazette-bg)';
-        reader.style.color = light ? 'var(--gazette-light-text)' : 'var(--gazette-text)';
-      }
       updateGazetteThemeControls();
     }
 
@@ -804,11 +617,6 @@
       document.documentElement.style.setProperty('--current-bg', palette.bg);
       document.documentElement.style.setProperty('--current-text', palette.text);
       updatePerspectiveTimeControls();
-      const reader = document.getElementById('reader');
-      if (reader && reader.classList.contains('active') && reader.dataset.readerModule === 'perspective') {
-        reader.style.backgroundColor = palette.bg;
-        reader.style.color = palette.text;
-      }
     }
 
     function setPerspectiveTime(mode) {
@@ -903,6 +711,12 @@
       ray.style.transform = `rotate(${Math.random() * 20 - 10}deg)`;
       ray.style.animation = `pulse ${Math.random() * 4 + 4}s infinite ease-in-out`;
       raysContainer.appendChild(ray);
+    }
+
+    // Allow dedicated article pages to return directly to their source department.
+    const requestedWing = new URLSearchParams(window.location.search).get('wing');
+    if (['gazette', 'perspective', 'desk'].includes(requestedWing)) {
+      switchModule(requestedWing);
     }
   </script>
 

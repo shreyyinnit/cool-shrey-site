@@ -1,0 +1,3 @@
+User-agent: *
+Allow: /
+Sitemap: https://themotiondesk.netlify.app/sitemap.xml
