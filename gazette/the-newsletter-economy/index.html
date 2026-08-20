@@ -26,11 +26,15 @@
 * { box-sizing:border-box; }
 .visually-hidden { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
 html { scroll-behavior:smooth; }
-body { margin:0; font-family:var(--font-sans); min-height:100vh; text-rendering:optimizeLegibility; -webkit-font-smoothing:antialiased; }
+body { margin:0; font-family:var(--font-sans); min-height:100vh; text-rendering:optimizeLegibility; -webkit-font-smoothing:antialiased; transition:background-color 1.1s var(--ease-out),color .8s var(--ease-out); }
 .reading-progress { position:fixed; top:0; left:0; z-index:20; width:100%; height:2px; background:currentColor; opacity:.75; pointer-events:none; transform:scaleX(var(--scroll-progress)); transform-origin:left; transition:transform 120ms linear; }
+.cursor-dot,.cursor-ring { display:none; pointer-events:none; position:fixed; top:0; left:0; z-index:30; border-radius:50%; transform:translate3d(-100px,-100px,0); will-change:transform,width,height; }
+@media (hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference) { body.cursor-ready,body.cursor-ready a,body.cursor-ready button,body.cursor-ready input[type="range"] { cursor:none; } body.cursor-ready input:not([type="range"]),body.cursor-ready textarea { cursor:text; } .cursor-dot { display:block; width:6px; height:6px; margin:-3px 0 0 -3px; background:currentColor; transition:opacity .12s ease; } .cursor-ring { display:block; width:28px; height:28px; margin:-14px 0 0 -14px; border:1px solid currentColor; opacity:.58; transition:width .22s var(--ease-out),height .22s var(--ease-out),margin .22s var(--ease-out),background-color .22s ease; } .cursor-ring.is-interactive { width:42px; height:42px; margin:-21px 0 0 -21px; background:rgba(255,255,255,.12); } .cursor-dot.is-pressed { opacity:.38; } }
 body.gazette { background:var(--ink); color:#f8f8f8; }
 body.perspective { background:var(--forest); color:var(--forest-text); }
 body.perspective::before { content:''; position:fixed; inset:0; z-index:-1; pointer-events:none; background:radial-gradient(circle at 70% 15%,rgba(75,113,82,.22),transparent 29%),linear-gradient(180deg,#071007 0%,#0d1a10 62%,#081109 100%); }
+.atmosphere-transition { position:fixed; inset:0; z-index:0; pointer-events:none; opacity:0; background:transparent; transition:opacity 1.12s var(--ease-out); }
+.site-header,.article-shell { position:relative; z-index:1; }
 a { color:inherit; }
 .site-header { min-height:82px; padding:0 5.2vw; display:flex; align-items:center; justify-content:space-between; gap:24px; border-bottom:1px solid var(--line); background:rgba(7,7,7,.42); backdrop-filter:blur(14px); animation:header-enter 520ms var(--ease-out) both; }
 .perspective .site-header { background:rgba(8,20,9,.55); }
@@ -75,12 +79,15 @@ a { color:inherit; }
 .article-footer .wordmark { opacity:.62; }
 .share-status { min-height:1.4em; font-family:var(--font-mono); font-size:9px; letter-spacing:.12em; text-transform:uppercase; opacity:.68; }
 :focus-visible { outline:2px solid currentColor; outline-offset:5px; }
-@media (max-width:650px) { .site-header { min-height:68px; padding:0 24px; } .wordmark { font-size:8px; letter-spacing:.22em; } .section-link { font-size:8px; } .article-shell { width:min(100% - 40px,1120px); padding-top:76px; } .article-meta { gap:9px; } .article-rule { margin:60px 0 42px; } .article-body { font-size:21px; line-height:1.63; } .article-footer { margin-top:72px; } }
+@media (max-width:650px) { .site-header { min-height:68px; padding:0 24px; backdrop-filter:none; } .wordmark { font-size:8px; letter-spacing:.22em; } .section-link { font-size:8px; } .article-shell { width:min(100% - 40px,1120px); padding-top:76px; } .article-meta { gap:9px; } .article-rule { margin:60px 0 42px; } .article-body { font-size:21px; line-height:1.63; } .article-footer { margin-top:72px; } }
 @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; scroll-behavior:auto!important; } .reading-progress { display:none; } }
 </style>
 </head>
 <body class="gazette">
   <div class="reading-progress" aria-hidden="true"></div>
+  <div class="atmosphere-transition" id="atmosphere-transition" aria-hidden="true"></div>
+  <div class="cursor-dot" id="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" id="cursor-ring" aria-hidden="true"></div>
   <header class="site-header">
     <a class="wordmark" href="/">THE MOTION DESK</a>
     <a class="section-link" href="/?wing=gazette">← Back to The Gazette</a>
@@ -174,7 +181,19 @@ a { color:inherit; }
     window.addEventListener('scroll', updateReadingProgress, { passive: true });
     window.addEventListener('resize', updateReadingProgress);
     updateReadingProgress();
-    if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+    const canUseEditorialCursor = window.matchMedia('(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)').matches;
+    if (canUseEditorialCursor) {
+      const dot = document.getElementById('cursor-dot'); const ring = document.getElementById('cursor-ring');
+      let targetX = -100, targetY = -100, ringX = -100, ringY = -100, cursorFrame = null;
+      document.body.classList.add('cursor-ready');
+      const renderCursor = () => { ringX += (targetX - ringX) * .18; ringY += (targetY - ringY) * .18; dot.style.transform = `translate3d(${targetX}px,${targetY}px,0)`; ring.style.transform = `translate3d(${ringX}px,${ringY}px,0)`; if (Math.abs(targetX-ringX) > .15 || Math.abs(targetY-ringY) > .15) cursorFrame = requestAnimationFrame(renderCursor); else cursorFrame = null; };
+      window.addEventListener('pointermove', event => { targetX = event.clientX; targetY = event.clientY; if (!cursorFrame) cursorFrame = requestAnimationFrame(renderCursor); }, { passive:true });
+      document.addEventListener('pointerover', event => ring.classList.toggle('is-interactive', Boolean(event.target.closest('a,button,input[type="range"]'))));
+      document.addEventListener('pointerdown', () => dot.classList.add('is-pressed'));
+      document.addEventListener('pointerup', () => dot.classList.remove('is-pressed'));
+    }
+    const compactMotion = window.matchMedia('(max-width: 700px), (pointer: coarse)').matches;
+    if (!compactMotion && !window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
       const observer = new IntersectionObserver(entries => {
         entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('is-visible'); observer.unobserve(entry.target); } });
       }, { threshold: 0.08, rootMargin: '0px 0px -8% 0px' });
