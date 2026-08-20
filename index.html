@@ -23,6 +23,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@200;300;400;500;600;700&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
   <style>
     * { box-sizing: border-box; margin: 0; padding: 0; }
+    .visually-hidden { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
 
     :root {
       --primary-black: #0A0A0A;
@@ -195,6 +196,11 @@
     .perspective-time-label { width: 100%; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--sage); margin-bottom: 8px; }
     .perspective-time-button { border: 1px solid rgba(107,143,113,0.35); background: rgba(10,26,13,0.24); color: inherit; padding: 10px 13px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
     .perspective-time-button:hover, .perspective-time-button.active { border-color: var(--sage); background: rgba(107,143,113,0.22); color: #f4f0df; }
+    .soundscape-controls { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 12px; margin-top: 26px; }
+    .soundscape-toggle { border: 1px solid rgba(107,143,113,0.45); background: rgba(10,26,13,0.28); color: inherit; padding: 10px 13px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
+    .soundscape-toggle:hover, .soundscape-toggle.active { border-color: var(--sage); background: rgba(107,143,113,0.26); color: #f4f0df; }
+    .soundscape-volume { width: 92px; accent-color: var(--sage); cursor: pointer; }
+    .soundscape-status { width: 100%; min-height: 1.2em; font-family: var(--font-mono); font-size: 8px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--sage); opacity: 0.72; }
 
     .featured-essay { display: block; color: inherit; text-decoration: none; border: 1px solid rgba(107,143,113,0.2); padding: 4rem; margin-bottom: 2rem; background: rgba(10,26,13,0.4); backdrop-filter: blur(20px); cursor: pointer; transition: 0.4s; }
     .featured-essay:hover { border-color: var(--sage); background: rgba(10,26,13,0.6); transform: translateY(-5px); }
@@ -392,6 +398,12 @@
           <button class="perspective-time-button" type="button" data-perspective-time="night" onclick="setPerspectiveTime('night')">Night</button>
           <button class="perspective-time-button" type="button" data-perspective-time="midnight" onclick="setPerspectiveTime('midnight')">Midnight</button>
         </div>
+        <div class="soundscape-controls" aria-label="Perspective ambient soundscape">
+          <button class="soundscape-toggle" id="perspective-sound-toggle" type="button" onclick="togglePerspectiveSound()" aria-pressed="false">Sound: Off</button>
+          <label class="visually-hidden" for="perspective-sound-volume">Ambient sound volume</label>
+          <input class="soundscape-volume" id="perspective-sound-volume" type="range" min="0" max="25" value="12" step="1" oninput="setPerspectiveSoundVolume(this.value)" aria-label="Ambient sound volume">
+          <span class="soundscape-status" id="perspective-sound-status" role="status" aria-live="polite">Audio is optional. Off by default.</span>
+        </div>
       </div>
       <div class="content-section" style="padding-top:0;">
         <a class="featured-essay" href="/perspective/notes-on-slowness-as-a-creative-practice/" aria-label="Read Notes on Slowness as a Creative Practice">
@@ -565,6 +577,7 @@
         document.documentElement.style.setProperty('--current-text', 'var(--desk-text)');
       }
       
+      if (id !== 'perspective') stopPerspectiveSound();
       window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
     }
 
@@ -596,6 +609,123 @@
       midnight: { bg: 'var(--perspective-midnight-bg)', text: 'var(--perspective-midnight-text)', leaf: '#587b8a' }
     };
 
+    const perspectiveSound = {
+      isOn: false,
+      currentMode: null,
+      audio: {},
+      volume: Math.min(0.25, Math.max(0, Number(localStorage.getItem('perspective-sound-volume') || 0.12))),
+      transitionToken: 0,
+      pausedForVisibility: false,
+      tracks: {
+        morning: '/assets/sounds/perspective-morning.mp3',
+        day: '/assets/sounds/perspective-day.mp3',
+        night: '/assets/sounds/perspective-night.mp3',
+        midnight: '/assets/sounds/perspective-midnight.mp3'
+      }
+    };
+
+    function getPerspectiveAudio(mode) {
+      if (!perspectiveSound.audio[mode]) {
+        const audio = new Audio(perspectiveSound.tracks[mode]);
+        audio.loop = true;
+        audio.preload = 'metadata';
+        audio.playsInline = true;
+        perspectiveSound.audio[mode] = audio;
+      }
+      return perspectiveSound.audio[mode];
+    }
+
+    function updatePerspectiveSoundControls(message) {
+      const button = document.getElementById('perspective-sound-toggle');
+      const slider = document.getElementById('perspective-sound-volume');
+      const status = document.getElementById('perspective-sound-status');
+      if (!button || !slider || !status) return;
+      button.textContent = perspectiveSound.isOn ? 'Sound: On' : 'Sound: Off';
+      button.classList.toggle('active', perspectiveSound.isOn);
+      button.setAttribute('aria-pressed', String(perspectiveSound.isOn));
+      slider.value = Math.round(perspectiveSound.volume * 100);
+      slider.setAttribute('aria-valuetext', `${Math.round(perspectiveSound.volume * 100)} percent`);
+      status.textContent = message || (perspectiveSound.isOn ? `${getPerspectiveMode()} ambience · ${Math.round(perspectiveSound.volume * 100)}%` : 'Audio is optional. Off by default.');
+    }
+
+    function fadePerspectiveAudio(audio, from, to, token, onComplete) {
+      const started = performance.now();
+      const duration = 900;
+      audio.volume = from;
+      const step = (now) => {
+        if (token !== perspectiveSound.transitionToken) return;
+        const progress = Math.min(1, (now - started) / duration);
+        audio.volume = from + (to - from) * progress;
+        if (progress < 1) requestAnimationFrame(step);
+        else if (onComplete) onComplete();
+      };
+      requestAnimationFrame(step);
+    }
+
+    async function crossfadePerspectiveSound(mode) {
+      if (!perspectiveSound.isOn) return;
+      const next = getPerspectiveAudio(mode);
+      const previous = perspectiveSound.currentMode ? getPerspectiveAudio(perspectiveSound.currentMode) : null;
+      if (previous === next) return;
+      const token = ++perspectiveSound.transitionToken;
+      next.volume = 0;
+      try {
+        await next.play();
+      } catch (error) {
+        perspectiveSound.isOn = false;
+        updatePerspectiveSoundControls('Sound could not start. Try again.');
+        return;
+      }
+      if (previous) {
+        fadePerspectiveAudio(previous, previous.volume, 0, token, () => {
+          previous.pause();
+          previous.currentTime = 0;
+        });
+      }
+      fadePerspectiveAudio(next, 0, perspectiveSound.volume, token);
+      perspectiveSound.currentMode = mode;
+      updatePerspectiveSoundControls();
+    }
+
+    function stopPerspectiveSound() {
+      if (!perspectiveSound.currentMode) return;
+      const current = getPerspectiveAudio(perspectiveSound.currentMode);
+      current.pause();
+      current.currentTime = 0;
+      perspectiveSound.currentMode = null;
+    }
+
+    function togglePerspectiveSound() {
+      if (perspectiveSound.isOn) {
+        perspectiveSound.isOn = false;
+        perspectiveSound.transitionToken += 1;
+        stopPerspectiveSound();
+        updatePerspectiveSoundControls();
+        return;
+      }
+      perspectiveSound.isOn = true;
+      crossfadePerspectiveSound(getPerspectiveMode());
+    }
+
+    function setPerspectiveSoundVolume(value) {
+      perspectiveSound.volume = Math.max(0, Math.min(0.25, Number(value) / 100));
+      localStorage.setItem('perspective-sound-volume', perspectiveSound.volume);
+      if (perspectiveSound.currentMode) getPerspectiveAudio(perspectiveSound.currentMode).volume = perspectiveSound.volume;
+      updatePerspectiveSoundControls();
+    }
+
+    document.addEventListener('visibilitychange', () => {
+      if (!perspectiveSound.currentMode) return;
+      const current = getPerspectiveAudio(perspectiveSound.currentMode);
+      if (document.hidden && !current.paused) {
+        perspectiveSound.pausedForVisibility = true;
+        current.pause();
+      } else if (!document.hidden && perspectiveSound.pausedForVisibility && perspectiveSound.isOn) {
+        current.play().catch(() => {});
+        perspectiveSound.pausedForVisibility = false;
+      }
+    });
+
     function getPerspectiveMode() {
       const stored = localStorage.getItem('perspective-time');
       return perspectiveModes[stored] ? stored : 'day';
@@ -617,6 +747,8 @@
       document.documentElement.style.setProperty('--current-bg', palette.bg);
       document.documentElement.style.setProperty('--current-text', palette.text);
       updatePerspectiveTimeControls();
+      updatePerspectiveSoundControls();
+      if (perspectiveSound.isOn) crossfadePerspectiveSound(mode);
     }
 
     function setPerspectiveTime(mode) {
