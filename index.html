@@ -35,6 +35,14 @@
       --perspective-bg: #0d1a10; /* Deepest Forest */
       --perspective-text: #FAFAF8;
       --sage: #6B8F71;
+      --perspective-morning-bg: #53644f;
+      --perspective-morning-text: #f5f1e5;
+      --perspective-day-bg: #0d1a10;
+      --perspective-day-text: #FAFAF8;
+      --perspective-night-bg: #0a1419;
+      --perspective-night-text: #e8f0ed;
+      --perspective-midnight-bg: #030608;
+      --perspective-midnight-text: #dce6e7;
       
       --desk-bg: #2D241E; /* Warm Charcoal Brown */
       --desk-text: #F8F8F8;
@@ -59,11 +67,26 @@
       background: linear-gradient(180deg, #091408 0%, #0f2214 30%, #142a18 65%, #0d1a10 100%);
     }
     body.perspective-active .forest-stage { opacity: 1; }
+    body.perspective-morning .forest-stage { background: linear-gradient(180deg, #a5ad87 0%, #6f8466 31%, #3e5b43 68%, #263b2b 100%); }
+    body.perspective-day .forest-stage { background: linear-gradient(180deg, #091408 0%, #0f2214 30%, #142a18 65%, #0d1a10 100%); }
+    body.perspective-night .forest-stage { background: linear-gradient(180deg, #08121a 0%, #10282c 32%, #102820 67%, #071116 100%); }
+    body.perspective-midnight .forest-stage { background: radial-gradient(circle at 65% 18%, rgba(47,72,84,0.22), transparent 28%), linear-gradient(180deg, #030608 0%, #080e13 42%, #05090b 100%); }
+    body.perspective-morning .forest-svg { filter: sepia(0.22) saturate(0.8) brightness(1.35); opacity: 0.34 !important; }
+    body.perspective-night .forest-svg { filter: hue-rotate(155deg) saturate(0.75) brightness(0.7); opacity: 0.22 !important; }
+    body.perspective-midnight .forest-svg { filter: hue-rotate(165deg) saturate(0.55) brightness(0.35); opacity: 0.16 !important; }
     .rays { position: absolute; inset: 0; pointer-events: none; }
     .ray { position: absolute; top: 0; width: 3px; height: 65%; background: linear-gradient(to bottom, rgba(138,171,143,0.06), transparent); transform-origin: top center; }
     #leaf-canvas { position: absolute; inset: 0; pointer-events: none; z-index: 10; }
     .ground-mist { position: absolute; bottom: 0; left: 0; right: 0; height: 250px; background: linear-gradient(to top, rgba(10,22,13,0.95) 0%, rgba(10,22,13,0.4) 50%, transparent 100%); z-index: 11; }
     .top-vignette { position: absolute; top: 0; left: 0; right: 0; height: 220px; background: linear-gradient(to bottom, rgba(9,20,8,0.8) 0%, transparent 100%); z-index: 11; }
+    body.perspective-morning .ray { background: linear-gradient(to bottom, rgba(255,233,173,0.2), transparent); }
+    body.perspective-night .ray { background: linear-gradient(to bottom, rgba(132,190,202,0.11), transparent); }
+    body.perspective-midnight .ray { background: linear-gradient(to bottom, rgba(93,130,149,0.055), transparent); }
+    body.perspective-morning .ground-mist { background: linear-gradient(to top, rgba(31,51,35,0.66) 0%, rgba(75,103,72,0.28) 48%, transparent 100%); }
+    body.perspective-night .ground-mist { background: linear-gradient(to top, rgba(4,14,18,0.95) 0%, rgba(8,28,28,0.48) 50%, transparent 100%); }
+    body.perspective-midnight .ground-mist { background: linear-gradient(to top, rgba(2,5,7,0.98) 0%, rgba(4,11,14,0.68) 55%, transparent 100%); }
+    body.perspective-morning .top-vignette { background: linear-gradient(to bottom, rgba(70,82,58,0.3) 0%, transparent 100%); }
+    body.perspective-night .top-vignette, body.perspective-midnight .top-vignette { background: linear-gradient(to bottom, rgba(2,8,12,0.86) 0%, transparent 100%); }
 
     .content-wrapper { position: relative; z-index: 100; }
 
@@ -133,6 +156,15 @@
     .hero-title-italic { font-family: var(--font-serif); font-size: clamp(3.5rem, 10vw, 7.5rem); font-weight: 300; font-style: italic; color: var(--sage); opacity: 0; transform: translateY(30px); transition: 1.2s ease 0.8s; }
     .hero-rule { width: 1px; height: 60px; background: linear-gradient(to bottom, var(--sage), transparent); margin: 3rem auto; opacity: 0; transition: 1s ease 1s; }
     body.perspective-active .hero-eyebrow, body.perspective-active .hero-title, body.perspective-active .hero-title-italic, body.perspective-active .hero-rule { opacity: 1; transform: translateY(0); }
+    body.perspective-morning .hero-title-italic { color: #e5c982; }
+    body.perspective-night .hero-title-italic { color: #8eb9bd; }
+    body.perspective-midnight .hero-title-italic { color: #688895; }
+    .perspective-time-picker { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 8px; margin-top: 0.4rem; }
+    .perspective-time-label { width: 100%; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--sage); margin-bottom: 8px; }
+    .perspective-time-button { border: 1px solid rgba(107,143,113,0.35); background: rgba(10,26,13,0.24); color: inherit; padding: 10px 13px; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; cursor: pointer; transition: 0.3s; }
+    .perspective-time-button:hover, .perspective-time-button.active { border-color: var(--sage); background: rgba(107,143,113,0.22); color: #f4f0df; }
+    .reader-perspective-picker { position: fixed; top: 34px; left: 60px; z-index: 2; justify-content: flex-start; max-width: 410px; }
+    .reader-perspective-picker .perspective-time-label { width: auto; margin: 0 8px 0 0; }
 
     .featured-essay { border: 1px solid rgba(107,143,113,0.2); padding: 4rem; margin-bottom: 2rem; background: rgba(10,26,13,0.4); backdrop-filter: blur(20px); cursor: pointer; transition: 0.4s; }
     .featured-essay:hover { border-color: var(--sage); background: rgba(10,26,13,0.6); transform: translateY(-5px); }
@@ -315,6 +347,13 @@
         <div class="hero-title">Where thought</div>
         <div class="hero-title-italic">finds its voice.</div>
         <div class="hero-rule"></div>
+        <div class="perspective-time-picker" aria-label="Perspective atmosphere">
+          <span class="perspective-time-label">Choose an atmosphere</span>
+          <button class="perspective-time-button" type="button" data-perspective-time="morning" onclick="setPerspectiveTime('morning')">Morning</button>
+          <button class="perspective-time-button" type="button" data-perspective-time="day" onclick="setPerspectiveTime('day')">Daytime</button>
+          <button class="perspective-time-button" type="button" data-perspective-time="night" onclick="setPerspectiveTime('night')">Night</button>
+          <button class="perspective-time-button" type="button" data-perspective-time="midnight" onclick="setPerspectiveTime('midnight')">Midnight</button>
+        </div>
       </div>
       <div class="content-section" style="padding-top:0;">
         <div class="featured-essay" onclick="openEssay('slowness')">
@@ -451,6 +490,13 @@
   <!-- ESSAY READER -->
   <div class="essay-reader" id="reader">
     <button class="gazette-theme-toggle reader-theme-toggle" id="reader-theme-toggle" type="button" onclick="toggleGazetteTheme()" aria-pressed="false" hidden>Switch to light</button>
+    <div class="perspective-time-picker reader-perspective-picker" id="reader-perspective-controls" aria-label="Perspective atmosphere" hidden>
+      <span class="perspective-time-label">Atmosphere</span>
+      <button class="perspective-time-button" type="button" data-perspective-time="morning" onclick="setPerspectiveTime('morning')">Morning</button>
+      <button class="perspective-time-button" type="button" data-perspective-time="day" onclick="setPerspectiveTime('day')">Daytime</button>
+      <button class="perspective-time-button" type="button" data-perspective-time="night" onclick="setPerspectiveTime('night')">Night</button>
+      <button class="perspective-time-button" type="button" data-perspective-time="midnight" onclick="setPerspectiveTime('midnight')">Midnight</button>
+    </div>
     <div class="reader-close" onclick="closeEssay()">[ CLOSE_READER ]</div>
     <div class="reader-container">
       <h1 class="reader-title" id="reader-title">Title</h1>
@@ -595,9 +641,8 @@
         document.documentElement.style.setProperty('--current-text', light ? 'var(--gazette-light-text)' : 'var(--gazette-text)');
         updateGazetteThemeControls();
       } else if (id === 'perspective') {
-        document.documentElement.style.setProperty('--current-bg', 'var(--perspective-bg)');
-        document.documentElement.style.setProperty('--current-text', 'var(--perspective-text)');
         body.classList.add('perspective-active');
+        applyPerspectiveTime();
       } else if (id === 'desk') {
         document.documentElement.style.setProperty('--current-bg', 'var(--desk-bg)');
         document.documentElement.style.setProperty('--current-text', 'var(--desk-text)');
@@ -618,15 +663,18 @@
       const activeModule = document.querySelector('.module.active').id;
       reader.dataset.readerModule = activeModule;
       const readerThemeToggle = document.getElementById('reader-theme-toggle');
+      const readerPerspectiveControls = document.getElementById('reader-perspective-controls');
       readerThemeToggle.hidden = activeModule !== 'gazette';
+      readerPerspectiveControls.hidden = activeModule !== 'perspective';
       if (activeModule === 'gazette') {
         const light = document.body.classList.contains('gazette-light');
         reader.style.backgroundColor = light ? 'var(--gazette-light-bg)' : 'var(--gazette-bg)';
         reader.style.color = light ? 'var(--gazette-light-text)' : 'var(--gazette-text)';
         updateGazetteThemeControls();
       } else {
-        reader.style.backgroundColor = 'var(--perspective-bg)';
-        reader.style.color = 'var(--perspective-text)';
+        applyPerspectiveTime();
+        reader.style.backgroundColor = 'var(--current-bg)';
+        reader.style.color = 'var(--current-text)';
       }
       
       reader.classList.add('active');
@@ -638,6 +686,7 @@
       reader.classList.remove('active');
       reader.dataset.readerModule = '';
       document.getElementById('reader-theme-toggle').hidden = true;
+      document.getElementById('reader-perspective-controls').hidden = true;
       document.body.style.overflow = 'auto';
     }
 
@@ -665,6 +714,47 @@
         reader.style.color = light ? 'var(--gazette-light-text)' : 'var(--gazette-text)';
       }
       updateGazetteThemeControls();
+    }
+
+    const perspectiveModes = {
+      morning: { bg: 'var(--perspective-morning-bg)', text: 'var(--perspective-morning-text)', leaf: '#d5c98d' },
+      day: { bg: 'var(--perspective-day-bg)', text: 'var(--perspective-day-text)', leaf: '#6B8F71' },
+      night: { bg: 'var(--perspective-night-bg)', text: 'var(--perspective-night-text)', leaf: '#83b2af' },
+      midnight: { bg: 'var(--perspective-midnight-bg)', text: 'var(--perspective-midnight-text)', leaf: '#587b8a' }
+    };
+
+    function getPerspectiveMode() {
+      const stored = localStorage.getItem('perspective-time');
+      return perspectiveModes[stored] ? stored : 'day';
+    }
+
+    function updatePerspectiveTimeControls() {
+      const mode = getPerspectiveMode();
+      document.body.classList.remove('perspective-morning', 'perspective-day', 'perspective-night', 'perspective-midnight');
+      document.body.classList.add(`perspective-${mode}`);
+      document.querySelectorAll('[data-perspective-time]').forEach(button => {
+        button.classList.toggle('active', button.dataset.perspectiveTime === mode);
+        button.setAttribute('aria-pressed', String(button.dataset.perspectiveTime === mode));
+      });
+    }
+
+    function applyPerspectiveTime() {
+      const mode = getPerspectiveMode();
+      const palette = perspectiveModes[mode];
+      document.documentElement.style.setProperty('--current-bg', palette.bg);
+      document.documentElement.style.setProperty('--current-text', palette.text);
+      updatePerspectiveTimeControls();
+      const reader = document.getElementById('reader');
+      if (reader && reader.classList.contains('active') && reader.dataset.readerModule === 'perspective') {
+        reader.style.backgroundColor = palette.bg;
+        reader.style.color = palette.text;
+      }
+    }
+
+    function setPerspectiveTime(mode) {
+      if (!perspectiveModes[mode]) return;
+      localStorage.setItem('perspective-time', mode);
+      applyPerspectiveTime();
     }
 
     function handleMailSubmit(event, subject) {
@@ -723,7 +813,7 @@
         ctx.translate(this.x, this.y);
         ctx.rotate(this.rotation);
         ctx.globalAlpha = this.opacity;
-        ctx.fillStyle = '#6B8F71';
+        ctx.fillStyle = perspectiveModes[getPerspectiveMode()].leaf;
         ctx.beginPath();
         ctx.moveTo(0, 0);
         ctx.quadraticCurveTo(this.size, -this.size, 0, -this.size * 2);
