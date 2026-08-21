@@ -13,10 +13,12 @@
   <meta property="og:title" content="Notes on Slowness as a Creative Practice">
   <meta property="og:description" content="An essay on letting creative work take the time it needs.">
   <meta property="og:url" content="https://themotiondesk.netlify.app/perspective/notes-on-slowness-as-a-creative-practice/">
+
   <meta property="article:published_time" content="2026-04-01T00:00:00+00:00">
   <meta name="twitter:card" content="summary">
   <meta name="twitter:title" content="Notes on Slowness as a Creative Practice">
   <meta name="twitter:description" content="An essay on letting creative work take the time it needs.">
+
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
@@ -53,6 +55,8 @@ a { color:inherit; }
 .action-button { appearance:none; border:1px solid currentColor; background:transparent; color:inherit; padding:12px 15px; font-family:var(--font-mono); font-size:9px; letter-spacing:.14em; text-transform:uppercase; cursor:pointer; text-decoration:none; opacity:.9; transition:background .25s ease,color .25s ease,transform .25s ease; }
 .action-button:hover { background:#f8f8f8; color:#0d0d0d; transform:translateY(-2px); }
 .perspective .action-button:hover { background:var(--forest-text); color:var(--forest); }
+.article-cover { margin:52px 0 0; overflow:hidden; border:1px solid var(--line); background:#151515; }
+.article-cover img { width:100%; height:auto; display:block; aspect-ratio:16 / 9; object-fit:cover; filter:saturate(.9) contrast(1.03); }
 .article-rule { height:1px; margin:76px 0 58px; background:var(--line); }
 .article-body { max-width:730px; margin:0 auto; font-family:var(--font-serif); font-weight:400; font-size:clamp(21px,2vw,26px); line-height:1.68; letter-spacing:.003em; }
 .article-body p { margin:0 0 1.55em; }
@@ -79,7 +83,7 @@ a { color:inherit; }
 .article-footer .wordmark { opacity:.62; }
 .share-status { min-height:1.4em; font-family:var(--font-mono); font-size:9px; letter-spacing:.12em; text-transform:uppercase; opacity:.68; }
 :focus-visible { outline:2px solid currentColor; outline-offset:5px; }
-@media (max-width:650px) { .site-header { min-height:68px; padding:0 24px; backdrop-filter:none; } .wordmark { font-size:8px; letter-spacing:.22em; } .section-link { font-size:8px; } .article-shell { width:min(100% - 40px,1120px); padding-top:76px; } .article-meta { gap:9px; } .article-rule { margin:60px 0 42px; } .article-body { font-size:21px; line-height:1.63; } .article-footer { margin-top:72px; } }
+@media (max-width:650px) { .site-header { min-height:68px; padding:0 24px; backdrop-filter:none; } .wordmark { font-size:8px; letter-spacing:.22em; } .section-link { font-size:8px; } .article-shell { width:min(100% - 40px,1120px); padding-top:76px; } .article-meta { gap:9px; } .article-cover { margin-top:38px; } .article-rule { margin:60px 0 42px; } .article-body { font-size:21px; line-height:1.63; } .article-footer { margin-top:72px; } }
 @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; scroll-behavior:auto!important; } .reading-progress { display:none; } }
 </style>
 </head>
@@ -114,6 +118,7 @@ a { color:inherit; }
       <input class="perspective-sound-volume" id="perspective-sound-volume" type="range" min="0" max="25" value="12" step="1" oninput="setPerspectiveSoundVolume(this.value)" aria-label="Ambient sound volume">
       <span class="perspective-audio-status" id="perspective-audio-status" role="status" aria-live="polite">Audio is optional. Off by default.</span>
     </section>
+
     <div class="article-rule"></div>
     <article class="article-body"><p>There is something almost offensive about moving slowly in a world that has built its entire personality around speed. Everything is instant, everything is optimized, everything is screaming at you to produce, post, perform, repeat. You open your phone and it is just an endless conveyor belt of people being talented faster than you, funnier than you, more consistent than you, more everything than you. And somewhere in that chaos, creativity quietly starts suffocating. Not dramatically. Not all at once. Just a slow, almost polite kind of suffocation.</p>
 <p>Slowness, then, feels like rebellion. Not the loud kind. Not the kind that gets claps and reposts. The quiet, stubborn kind. The kind where you sit with something longer than is considered efficient. Where you let an idea exist in its unfinished, slightly ugly, confusing form without immediately forcing it to become content.</p>

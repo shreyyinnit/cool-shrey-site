@@ -184,9 +184,16 @@
     .content-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 60px; }
     .card { position: relative; padding: 0 28px 40px 0; border-bottom: 1px solid var(--border-subtle); cursor: pointer; transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.35s ease; }
     .card:hover, .card:focus-visible { transform: translateX(10px); border-color: color-mix(in srgb, var(--current-text) 34%, transparent); }
-    #gazette .card::after { content: 'READ ↗'; position: absolute; right: 0; top: 0; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.15em; opacity: 0; transform: translateX(-5px); transition: opacity 0.25s ease, transform 0.25s ease; }
+    #gazette .card { padding: 0 0 40px; }
+    #gazette .card::after { content: 'READ ↗'; position: absolute; right: 18px; top: 18px; z-index: 2; font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.15em; color: #f7f1e8; opacity: 0; transform: translateX(-5px); transition: opacity 0.25s ease, transform 0.25s ease; text-shadow: 0 1px 12px rgba(0,0,0,0.9); }
     #gazette a.card { display: block; color: inherit; text-decoration: none; }
-    #gazette .card:hover::after, #gazette .card:focus-visible::after { opacity: 0.65; transform: translateX(0); }
+    #gazette .card:hover::after, #gazette .card:focus-visible::after { opacity: 0.9; transform: translateX(0); }
+    .gazette-card-image { position: relative; overflow: hidden; aspect-ratio: 16 / 9; margin-bottom: 24px; background: #161616; border: 1px solid rgba(255,255,255,0.09); }
+    .gazette-card-image::after { content: ''; position: absolute; inset: 0; background: linear-gradient(135deg, rgba(0,0,0,0.04) 28%, rgba(0,0,0,0.5) 100%); pointer-events: none; transition: opacity .45s var(--ease-out); }
+    .gazette-card-image img { width: 100%; height: 100%; display: block; object-fit: cover; filter: saturate(.88) contrast(1.03); transition: transform .7s var(--ease-out), filter .6s ease; }
+    #gazette .card:hover .gazette-card-image img, #gazette .card:focus-visible .gazette-card-image img { transform: scale(1.045); filter: saturate(1) contrast(1.06); }
+    #gazette .card:hover .gazette-card-image::after, #gazette .card:focus-visible .gazette-card-image::after { opacity: .5; }
+    body.gazette-light .gazette-card-image { border-color: rgba(20,20,20,.15); }
     .card-meta { font-family: var(--font-mono); font-size: 10px; opacity: 0.6; margin-bottom: 20px; display: flex; gap: 20px; }
     .card-title { font-family: var(--font-display); font-size: 32px; margin-bottom: 16px; }
     .card-desc { font-size: 15px; line-height: 1.7; opacity: 0.7; }
@@ -272,6 +279,7 @@
       .module { padding-top: 68px; }
       .home, .wing-hero, .content-section, .pitch-section, .footer { padding: 60px 30px; }
       .featured-essay { padding: 2rem; }
+      .gazette-card-image { margin-bottom: 20px; }
     }
 
     @media (max-width: 580px) {
@@ -369,21 +377,25 @@
       <div class="content-section">
         <div class="content-grid">
           <a class="card" href="/gazette/the-architecture-of-attention/" aria-label="Read The Architecture of Attention">
+            <div class="gazette-card-image"><img src="/assets/images/gazette/the-architecture-of-attention.webp" width="1600" height="900" alt="An anonymous hand holds a phone as pale fragments rise into an endless corridor of feeds." decoding="async" fetchpriority="high"></div>
             <div class="card-meta"><span>COVER STORY</span><span>APR 28, 2026</span></div>
             <h3 class="card-title">The Architecture of Attention</h3>
             <p class="card-desc">How media learned to manufacture urgency in an era of infinite scroll and algorithmic feeds.</p>
           </a>
           <a class="card" href="/gazette/why-every-brand-sounds-the-same/" aria-label="Read Why Every Brand Sounds the Same">
+            <div class="gazette-card-image"><img src="/assets/images/gazette/why-every-brand-sounds-the-same.webp" width="1600" height="900" alt="A dark field of identical loudspeakers and speech bubbles, with one irregular paper shape." loading="lazy" decoding="async"></div>
             <div class="card-meta"><span>ANALYSIS</span><span>APR 26, 2026</span></div>
             <h3 class="card-title">Why Every Brand Sounds the Same</h3>
             <p class="card-desc">The homogenization of corporate voice and what it means for authentic communication.</p>
           </a>
           <a class="card" href="/gazette/the-newsletter-economy/" aria-label="Read The Newsletter Economy">
+            <div class="gazette-card-image"><img src="/assets/images/gazette/the-newsletter-economy.webp" width="1600" height="900" alt="An independent writer’s desk with paper, envelope, pen, and threads of connection." loading="lazy" decoding="async"></div>
             <div class="card-meta"><span>REPORTING</span><span>APR 24, 2026</span></div>
             <h3 class="card-title">The Newsletter Economy</h3>
             <p class="card-desc">Independent writers are building sustainable businesses outside legacy media structures.</p>
           </a>
           <a class="card" href="/gazette/inside-content-factories/" aria-label="Read Inside Content Factories">
+            <div class="gazette-card-image"><img src="/assets/images/gazette/inside-content-factories.webp" width="1600" height="900" alt="An anonymous nighttime production floor with dim screens and blank panels moving on a conveyor." loading="lazy" decoding="async"></div>
             <div class="card-meta"><span>FEATURE</span><span>APR 22, 2026</span></div>
             <h3 class="card-title">Inside Content Factories</h3>
             <p class="card-desc">A look at the invisible infrastructure behind the posts that fill your feed every morning.</p>

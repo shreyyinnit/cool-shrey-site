@@ -13,14 +13,16 @@
   <meta property="og:title" content="The Architecture of Attention">
   <meta property="og:description" content="How media learned to manufacture urgency in an era of infinite scroll and algorithmic feeds.">
   <meta property="og:url" content="https://themotiondesk.netlify.app/gazette/the-architecture-of-attention/">
+  <meta property="og:image" content="https://themotiondesk.netlify.app/assets/images/gazette/the-architecture-of-attention.webp">
   <meta property="article:published_time" content="2026-04-28T00:00:00+00:00">
-  <meta name="twitter:card" content="summary">
+  <meta name="twitter:card" content="summary_large_image">
   <meta name="twitter:title" content="The Architecture of Attention">
   <meta name="twitter:description" content="How media learned to manufacture urgency in an era of infinite scroll and algorithmic feeds.">
+  <meta name="twitter:image" content="https://themotiondesk.netlify.app/assets/images/gazette/the-architecture-of-attention.webp">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "The Architecture of Attention", "description": "How media learned to manufacture urgency in an era of infinite scroll and algorithmic feeds.", "datePublished": "2026-04-28", "dateModified": "2026-04-28", "author": {"@type": "Organization", "name": "The Motion Desk"}, "publisher": {"@type": "Organization", "name": "The Motion Desk", "url": "https://themotiondesk.netlify.app"}, "mainEntityOfPage": "https://themotiondesk.netlify.app/gazette/the-architecture-of-attention/"}</script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "NewsArticle", "headline": "The Architecture of Attention", "description": "How media learned to manufacture urgency in an era of infinite scroll and algorithmic feeds.", "datePublished": "2026-04-28", "dateModified": "2026-04-28", "author": {"@type": "Organization", "name": "The Motion Desk"}, "publisher": {"@type": "Organization", "name": "The Motion Desk", "url": "https://themotiondesk.netlify.app"}, "mainEntityOfPage": "https://themotiondesk.netlify.app/gazette/the-architecture-of-attention/", "image": "https://themotiondesk.netlify.app/assets/images/gazette/the-architecture-of-attention.webp"}</script>
   <style>
 :root { --ink:#0d0d0d; --paper:#f5f0e8; --forest:#0d1a10; --forest-text:#f4f1e7; --sage:#81a185; --line:rgba(255,255,255,.16); --font-mono:'Space Mono',monospace; --font-display:'Playfair Display',serif; --font-serif:'Cormorant Garamond',serif; --font-sans:'Inter',sans-serif; --ease-out:cubic-bezier(.23,1,.32,1); --scroll-progress:0; }
 * { box-sizing:border-box; }
@@ -53,6 +55,8 @@ a { color:inherit; }
 .action-button { appearance:none; border:1px solid currentColor; background:transparent; color:inherit; padding:12px 15px; font-family:var(--font-mono); font-size:9px; letter-spacing:.14em; text-transform:uppercase; cursor:pointer; text-decoration:none; opacity:.9; transition:background .25s ease,color .25s ease,transform .25s ease; }
 .action-button:hover { background:#f8f8f8; color:#0d0d0d; transform:translateY(-2px); }
 .perspective .action-button:hover { background:var(--forest-text); color:var(--forest); }
+.article-cover { margin:52px 0 0; overflow:hidden; border:1px solid var(--line); background:#151515; }
+.article-cover img { width:100%; height:auto; display:block; aspect-ratio:16 / 9; object-fit:cover; filter:saturate(.9) contrast(1.03); }
 .article-rule { height:1px; margin:76px 0 58px; background:var(--line); }
 .article-body { max-width:730px; margin:0 auto; font-family:var(--font-serif); font-weight:400; font-size:clamp(21px,2vw,26px); line-height:1.68; letter-spacing:.003em; }
 .article-body p { margin:0 0 1.55em; }
@@ -79,7 +83,7 @@ a { color:inherit; }
 .article-footer .wordmark { opacity:.62; }
 .share-status { min-height:1.4em; font-family:var(--font-mono); font-size:9px; letter-spacing:.12em; text-transform:uppercase; opacity:.68; }
 :focus-visible { outline:2px solid currentColor; outline-offset:5px; }
-@media (max-width:650px) { .site-header { min-height:68px; padding:0 24px; backdrop-filter:none; } .wordmark { font-size:8px; letter-spacing:.22em; } .section-link { font-size:8px; } .article-shell { width:min(100% - 40px,1120px); padding-top:76px; } .article-meta { gap:9px; } .article-rule { margin:60px 0 42px; } .article-body { font-size:21px; line-height:1.63; } .article-footer { margin-top:72px; } }
+@media (max-width:650px) { .site-header { min-height:68px; padding:0 24px; backdrop-filter:none; } .wordmark { font-size:8px; letter-spacing:.22em; } .section-link { font-size:8px; } .article-shell { width:min(100% - 40px,1120px); padding-top:76px; } .article-meta { gap:9px; } .article-cover { margin-top:38px; } .article-rule { margin:60px 0 42px; } .article-body { font-size:21px; line-height:1.63; } .article-footer { margin-top:72px; } }
 @media (prefers-reduced-motion:reduce) { *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; scroll-behavior:auto!important; } .reading-progress { display:none; } }
 </style>
 </head>
@@ -103,6 +107,7 @@ a { color:inherit; }
     </div>
     <div class="share-status" id="share-status" role="status" aria-live="polite"></div>
 
+    <figure class="article-cover"><img src="/assets/images/gazette/the-architecture-of-attention.webp" width="1600" height="900" alt="An anonymous hand holding a phone as pale fragments rise into an endless corridor of feeds." decoding="async" fetchpriority="high"></figure>
     <div class="article-rule"></div>
     <article class="article-body"><p>There is a version of the internet that never existed but that we all remember anyway — slower, quieter, made of pages you had to find. You typed an address into a browser bar and arrived somewhere specific. The experience had geography. You came, you read, you left. The relationship between you and information had edges.</p>
 <p>That internet is gone now. What replaced it doesn't have pages so much as streams — continuous, ambient, designed to be entered but never quite exited. The scroll doesn't end. The feed refreshes. The notification arrives. And somewhere in that shift, something happened to attention itself: it stopped being something you gave and became something that was taken.</p>
