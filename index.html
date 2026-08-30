@@ -242,6 +242,48 @@
     .featured-label { font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.3em; color: var(--sage); margin-bottom: 1.5rem; display: block; }
     .featured-title { font-family: var(--font-serif); font-size: 2.5rem; line-height: 1.2; margin-bottom: 1.5rem; }
     .featured-excerpt { font-family: var(--font-serif); font-size: 1.2rem; font-style: italic; opacity: 0.4; line-height: 1.8; margin-bottom: 2rem; }
+    .perspective-write-cta { display: inline-flex; align-items: center; gap: 18px; border: 1px solid rgba(107,143,113,0.62); background: rgba(10,26,13,0.38); color: inherit; padding: 15px 20px; font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em; text-transform: uppercase; cursor: pointer; transition: transform .25s var(--ease-out), background .25s ease, border-color .25s ease; }
+    .perspective-write-cta:hover, .perspective-write-cta:focus-visible { background: rgba(107,143,113,0.24); border-color: var(--sage); transform: translateY(-3px); }
+    .perspective-write-cta span { color: var(--sage); font-size: 16px; line-height: 0; }
+    .perspective-identity-note { max-width: 480px; margin: 16px auto 0; font-family: var(--font-serif); font-size: 16px; line-height: 1.6; opacity: .62; }
+    .perspective-community { margin-top: 88px; padding-top: 56px; border-top: 1px solid rgba(107,143,113,0.22); }
+    .section-kicker { display: block; color: var(--sage); font-family: var(--font-mono); font-size: 9px; letter-spacing: .3em; text-transform: uppercase; margin-bottom: 16px; }
+    .community-heading { font-family: var(--font-serif); font-size: clamp(2.2rem, 5vw, 4rem); font-weight: 300; line-height: 1.05; margin-bottom: 16px; }
+    .community-intro { max-width: 620px; font-family: var(--font-serif); font-size: 18px; line-height: 1.7; opacity: .62; margin-bottom: 34px; }
+    .community-feed { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 28px; }
+    .community-post { border: 1px solid rgba(107,143,113,0.22); background: rgba(10,26,13,0.34); padding: 28px; min-height: 220px; transition: transform .3s var(--ease-out), border-color .3s ease, background .3s ease; }
+    .community-post:hover { transform: translateY(-4px); border-color: rgba(107,143,113,0.65); background: rgba(10,26,13,0.52); }
+    .community-post-meta { display: flex; justify-content: space-between; gap: 12px; color: var(--sage); font-family: var(--font-mono); font-size: 8px; letter-spacing: .15em; text-transform: uppercase; margin-bottom: 22px; }
+    .community-post-title { font-family: var(--font-serif); font-size: 28px; font-weight: 400; line-height: 1.15; margin-bottom: 14px; }
+    .community-post-body { font-family: var(--font-serif); font-size: 15px; line-height: 1.75; opacity: .72; white-space: pre-wrap; display: -webkit-box; -webkit-line-clamp: 5; -webkit-box-orient: vertical; overflow: hidden; }
+    .community-empty { border: 1px dashed rgba(107,143,113,0.32); padding: 26px; font-family: var(--font-serif); font-style: italic; opacity: .64; }
+    .editor-room { padding: 80px 60px; max-width: 1400px; margin: 0 auto; border-top: 1px solid var(--border-subtle); }
+    .editor-room-grid { display: grid; grid-template-columns: minmax(0, 1.2fr) minmax(260px, .8fr); gap: 60px; align-items: end; }
+    .editor-room-heading { font-family: var(--font-display); font-size: 48px; line-height: 1.02; margin-bottom: 18px; }
+    .editor-room-body { max-width: 700px; font-family: var(--font-serif); font-size: 19px; line-height: 1.7; opacity: .74; }
+    .editor-room-aside { border-left: 1px solid var(--border-subtle); padding-left: 28px; font-family: var(--font-mono); font-size: 10px; letter-spacing: .14em; line-height: 1.9; text-transform: uppercase; opacity: .66; }
+    .writer-dialog { position: fixed; inset: 0; z-index: 1500; display: grid; place-items: center; padding: 24px; background: rgba(3,7,4,.78); opacity: 0; pointer-events: none; transition: opacity .28s ease; }
+    .writer-dialog.is-open { opacity: 1; pointer-events: auto; }
+    .writer-panel { width: min(760px, 100%); max-height: min(760px, calc(100vh - 48px)); overflow: auto; background: #132418; color: #f2f0e6; border: 1px solid rgba(107,143,113,.45); box-shadow: 0 28px 90px rgba(0,0,0,.4); padding: clamp(26px, 5vw, 52px); transform: translateY(18px) scale(.98); transition: transform .35s var(--ease-out); }
+    .writer-dialog.is-open .writer-panel { transform: translateY(0) scale(1); }
+    .writer-panel-top { display:flex; justify-content:space-between; gap:24px; align-items:start; margin-bottom: 32px; }
+    .writer-panel-kicker { color: var(--sage); font-family: var(--font-mono); font-size: 9px; letter-spacing: .3em; text-transform: uppercase; margin-bottom: 14px; }
+    .writer-panel h2 { font-family: var(--font-serif); font-weight: 300; font-size: clamp(2.3rem, 6vw, 4.4rem); line-height: .95; }
+    .writer-close { border: 1px solid rgba(242,240,230,.25); background: transparent; color: inherit; width: 34px; height: 34px; font-family: var(--font-mono); cursor: pointer; transition: background .2s ease; }
+    .writer-close:hover, .writer-close:focus-visible { background: rgba(242,240,230,.12); }
+    .writer-lede { font-family: var(--font-serif); font-size: 17px; line-height: 1.65; opacity: .72; margin-bottom: 30px; }
+    .writer-form { display: grid; gap: 16px; }
+    .writer-form label { display: grid; gap: 8px; font-family: var(--font-mono); font-size: 9px; letter-spacing: .18em; text-transform: uppercase; color: rgba(242,240,230,.7); }
+    .writer-form input, .writer-form textarea { width: 100%; border: 1px solid rgba(242,240,230,.2); background: rgba(0,0,0,.18); color: inherit; padding: 13px 14px; font: 16px/1.55 var(--font-serif); outline: none; }
+    .writer-form textarea { min-height: 220px; resize: vertical; }
+    .writer-form input:focus, .writer-form textarea:focus { border-color: var(--sage); box-shadow: 0 0 0 3px rgba(107,143,113,.15); }
+    .writer-form-actions { display:flex; flex-wrap:wrap; align-items:center; gap: 14px; margin-top: 6px; }
+    .writer-submit { border: 1px solid var(--sage); background: var(--sage); color: #102016; padding: 14px 18px; font-family: var(--font-mono); font-size: 9px; letter-spacing: .17em; text-transform: uppercase; cursor: pointer; transition: transform .2s var(--ease-out), background .2s ease; }
+    .writer-submit:hover, .writer-submit:focus-visible { background: #8eae91; transform: translateY(-2px); }
+    .writer-account-button { border: 1px solid rgba(242,240,230,.3); background: transparent; color: inherit; padding: 14px 18px; font-family: var(--font-mono); font-size: 9px; letter-spacing: .17em; text-transform: uppercase; cursor: pointer; }
+    .writer-account-button:hover, .writer-account-button:focus-visible { border-color: var(--sage); }
+    .writer-status { width: 100%; min-height: 1.3em; color: #a7c4a4; font-family: var(--font-mono); font-size: 8px; letter-spacing: .13em; text-transform: uppercase; opacity: .76; }
+    .writer-policy { font-family: var(--font-mono); font-size: 8px; letter-spacing: .08em; line-height: 1.7; opacity: .48; margin-top: 22px; }
 
 
     /* GAZETTE DARK / LIGHT MODE */
@@ -280,6 +322,11 @@
       .home, .wing-hero, .content-section, .pitch-section, .footer { padding: 60px 30px; }
       .featured-essay { padding: 2rem; }
       .gazette-card-image { margin-bottom: 20px; }
+      .community-feed { grid-template-columns: 1fr; }
+      .editor-room { padding: 60px 30px; }
+      .editor-room-grid { grid-template-columns: 1fr; gap: 30px; }
+      .editor-room-heading { font-size: 40px; }
+      .editor-room-aside { border-left: 0; border-top: 1px solid var(--border-subtle); padding: 24px 0 0; }
     }
 
     @media (max-width: 580px) {
@@ -297,6 +344,12 @@
       .pitch-heading { font-size: 40px; }
       .footer { align-items: flex-start; flex-direction: column; gap: 20px; }
       .footer-links { flex-wrap: wrap; gap: 16px; }
+      .perspective-write-cta { width: 100%; justify-content: space-between; }
+      .perspective-community { margin-top: 62px; padding-top: 40px; }
+      .community-post { padding: 22px; }
+      .writer-dialog { padding: 14px; }
+      .writer-panel { max-height: calc(100vh - 28px); padding: 26px 20px; }
+      .writer-panel-top { margin-bottom: 24px; }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -347,12 +400,12 @@
         <div class="wing-grid">
           <div class="wing-box" role="button" tabindex="0" aria-label="Enter The Gazette" onclick="switchModule('gazette')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchModule('gazette')}">
             <h2 class="wing-box-name">The Gazette</h2>
-            <p class="wing-box-desc">Independent media exploring culture and the architecture of ideas.</p>
+            <p class="wing-box-desc">An editor-led publication for work shaped, reported, and signed by the Motion Desk.</p>
           </div>
 
           <div class="wing-box" role="button" tabindex="0" aria-label="Enter The Perspective" onclick="switchModule('perspective')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchModule('perspective')}">
             <h2 class="wing-box-name">The Perspective</h2>
-            <p class="wing-box-desc">Essays and reflections that reward slow reading and deep thought.</p>
+            <p class="wing-box-desc">A public writing room for people with something to notice, question, or say.</p>
           </div>
 
           <div class="wing-box" role="button" tabindex="0" aria-label="Enter The Desk" onclick="switchModule('desk')" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();switchModule('desk')}">
@@ -368,7 +421,7 @@
       <div class="wing-hero">
         <span class="wing-label">WING_01 // MEDIA</span>
         <h1 class="wing-h1">The Gazette</h1>
-        <p class="wing-p">Sharp reporting, editorial analysis, and the stories that shape the conversation. We value depth over speed.</p>
+        <p class="wing-p">The Motion Desk’s editor-led publication: reported, shaped, and published by Shaurya and Aadya.</p>
         <div class="gazette-controls">
           <button class="gazette-theme-toggle" id="gazette-theme-toggle" type="button" onclick="toggleGazetteTheme()" aria-pressed="false">Switch to light</button>
           <span class="gazette-mode-note" id="gazette-mode-note">Ink mode</span>
@@ -403,46 +456,28 @@
         </div>
       </div>
 
-      <!-- GAZETTE PITCH -->
-      <div class="pitch-section">
-        <h2 class="pitch-heading">Have a story worth telling?</h2>
-        <p class="pitch-subheading">Pitch us.</p>
-        <p class="pitch-body">The Gazette publishes reporting, analysis, opinion, and features. We're looking for sharp writing on media, culture, and the creative industries. Send us your pitch — we read everything.</p>
-        <ul class="pitch-list">
-          <li>Reporting & Features</li>
-          <li>Analysis & Opinion</li>
-          <li>Dispatches & Essays</li>
-          <li>Interviews</li>
-        </ul>
-        <form class="pitch-form" name="gazette-pitch" data-netlify="true" onsubmit="handleMailSubmit(event, 'Gazette Pitch')">
-          <div class="form-group">
-            <label class="form-label">Name</label>
-            <input class="form-input" name="name" type="text" placeholder="Your name" required>
+      <!-- GAZETTE EDITOR ROOM -->
+      <div class="editor-room">
+        <div class="editor-room-grid">
+          <div>
+            <span class="section-kicker">The editor room</span>
+            <h2 class="editor-room-heading">This is where the Desk edits itself.</h2>
+            <p class="editor-room-body">The Gazette is not an open submissions board. It is the editorial record of Motion Desk: work commissioned, reported, and shaped by Shaurya Seth and Aadya Mishra. For now, the Gazette stays deliberately small, deliberate, and ours.</p>
           </div>
-          <div class="form-group">
-            <label class="form-label">Email</label>
-            <input class="form-input" name="email" type="email" placeholder="your@email.com" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Proposed Headline</label>
-            <input class="form-input" name="headline" type="text" placeholder="What's the story?" style="grid-column: 1 / -1;" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Your Pitch</label>
-            <textarea class="form-textarea" name="pitch" placeholder="Tell us what you want to write and why it matters..." required></textarea>
-          </div>
-          <button type="submit" class="form-submit">SUBMIT PITCH →</button>
-        </form>
+          <p class="editor-room-aside">Two editors<br>One shared standard<br>Depth over urgency<br>Public work, private process</p>
+        </div>
       </div>
     </section>
 
     <!-- PERSPECTIVE -->
     <section class="module" id="perspective">
       <div class="perspective-hero">
-        <div class="hero-eyebrow">Motion Desk · Insights</div>
+        <div class="hero-eyebrow">Motion Desk · For the people</div>
         <div class="hero-title">Where thought</div>
         <div class="hero-title-italic">finds its voice.</div>
         <div class="hero-rule"></div>
+        <button class="perspective-write-cta" type="button" onclick="openWriterRoom()" aria-haspopup="dialog">Begin writing <span>↗</span></button>
+        <p class="perspective-identity-note">Start with a thought. Publish under a name you choose. The Perspective is a room for people, not a pitch queue.</p>
         <div class="perspective-time-picker" aria-label="Perspective atmosphere">
           <span class="perspective-time-label">Choose an atmosphere</span>
           <button class="perspective-time-button" type="button" data-perspective-time="morning" onclick="setPerspectiveTime('morning')">Morning</button>
@@ -458,56 +493,23 @@
         </div>
       </div>
       <div class="content-section" style="padding-top:0;">
-        <a class="featured-essay" href="/perspective/notes-on-slowness-as-a-creative-practice/" aria-label="Read Notes on Slowness as a Creative Practice">
-          <span class="featured-label">Featured Essay</span>
-          <h2 class="featured-title">Notes on Slowness as a Creative Practice</h2>
-          <p class="featured-excerpt">"Slowness, then, feels like rebellion. Not the loud kind. The quiet, stubborn kind."</p>
-          <div style="font-family:var(--font-mono); font-size:9px; color:var(--sage); letter-spacing:0.1em;">Shaurya Seth · 12 min read</div>
-        </a>
-        <div class="content-grid">
-          <div class="card">
-            <div class="card-meta"><span>OPINION</span><span>APRIL 2026</span></div>
-            <h3 class="card-title">The Tyranny of the Interesting Life</h3>
-            <p class="card-desc">We have confused a life worth living with a life worth posting.</p>
-          </div>
-          <div class="card">
-            <div class="card-meta"><span>ANALYSIS</span><span>MARCH 2026</span></div>
-            <h3 class="card-title">What We Talk About When We Talk About Authenticity</h3>
-            <p class="card-desc">The word has been so thoroughly colonized by marketing that it has lost its original meaning.</p>
+        <div class="perspective-community" id="perspective-community">
+          <span class="section-kicker">The people’s room</span>
+          <h2 class="community-heading">What are people thinking about?</h2>
+          <p class="community-intro">Read work from people who do not need a credential to have a perspective. Publish a short reflection or a long-form piece under the name that feels like yours.</p>
+          <div class="community-feed" id="community-feed" aria-live="polite">
+            <div class="community-empty">The room is open. The first piece can be yours.</div>
           </div>
         </div>
-      </div>
-
-      <!-- PERSPECTIVE PITCH -->
-      <div class="pitch-section">
-        <h2 class="pitch-heading">Have something worth saying?</h2>
-        <p class="pitch-subheading">We want to read it.</p>
-        <p class="pitch-body">The Perspective publishes essays, opinion, analysis, and reflection. We value voice over credentials. If you have an idea that needs more than a headline, pitch us. This is where long-form thinking lives.</p>
-        <ul class="pitch-list">
-          <li>Essays & Long-form Pieces</li>
-          <li>Opinion & Analysis</li>
-          <li>Reflection & Personal Essays</li>
-          <li>Ideas Worth Sitting With</li>
-        </ul>
-        <form class="pitch-form" name="perspective-pitch" data-netlify="true" onsubmit="handleMailSubmit(event, 'Perspective Pitch')">
-          <div class="form-group">
-            <label class="form-label">Name</label>
-            <input class="form-input" name="name" type="text" placeholder="Your name" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Email</label>
-            <input class="form-input" name="email" type="email" placeholder="your@email.com" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Working Title</label>
-            <input class="form-input" name="title" type="text" placeholder="What's the essay about?" style="grid-column: 1 / -1;" required>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Your Pitch</label>
-            <textarea class="form-textarea" name="pitch" placeholder="What's the argument? Why does it matter? What's your angle?" required></textarea>
-          </div>
-          <button type="submit" class="form-submit">SUBMIT PITCH →</button>
-        </form>
+        <div class="perspective-community" style="margin-top:72px;">
+          <span class="section-kicker">From the Desk</span>
+          <a class="featured-essay" href="/perspective/notes-on-slowness-as-a-creative-practice/" aria-label="Read Notes on Slowness as a Creative Practice">
+            <span class="featured-label">Featured Essay</span>
+            <h2 class="featured-title">Notes on Slowness as a Creative Practice</h2>
+            <p class="featured-excerpt">"Slowness, then, feels like rebellion. Not the loud kind. The quiet, stubborn kind."</p>
+            <div style="font-family:var(--font-mono); font-size:9px; color:var(--sage); letter-spacing:0.1em;">Shaurya Seth · 12 min read</div>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -578,6 +580,36 @@
       </div>
     </section>
 
+    <div class="writer-dialog" id="writer-dialog" role="dialog" aria-modal="true" aria-labelledby="writer-dialog-title" aria-hidden="true" onclick="if(event.target === this) closeWriterRoom()">
+      <div class="writer-panel" role="document">
+        <div class="writer-panel-top">
+          <div>
+            <div class="writer-panel-kicker">The Perspective · Open writing room</div>
+            <h2 id="writer-dialog-title">Put something into the world.</h2>
+          </div>
+          <button class="writer-close" type="button" onclick="closeWriterRoom()" aria-label="Close writing room">×</button>
+        </div>
+        <p class="writer-lede">There is no pitch to perfect and no credential to prove. Start with the sentence you cannot stop thinking about. When you are ready, publish it under a name you choose.</p>
+        <form class="writer-form" id="writer-form" onsubmit="publishPerspectivePost(event)">
+          <label>Display name / pseudonym
+            <input id="writer-name" name="displayName" type="text" maxlength="50" placeholder="e.g. The Midnight Commuter" autocomplete="nickname" required>
+          </label>
+          <label>Title
+            <input id="writer-title" name="title" type="text" maxlength="140" placeholder="Give the thought a doorway" required>
+          </label>
+          <label>Your piece
+            <textarea id="writer-body" name="body" maxlength="12000" placeholder="Begin here..." required></textarea>
+          </label>
+          <div class="writer-form-actions">
+            <button class="writer-submit" type="submit">Publish to The Perspective →</button>
+            <button class="writer-account-button" type="button" onclick="openPerspectiveAccount()">Save / sign in</button>
+            <span class="writer-status" id="writer-status" role="status" aria-live="polite"></span>
+          </div>
+        </form>
+        <p class="writer-policy">Your email stays private. Your chosen display name is what readers see. Published work can be reported and removed if it breaks the room’s basic safety rules.</p>
+      </div>
+    </div>
+
     <footer class="footer">
       <span class="footer-brand">© 2026 MOTION DESK</span>
       <div class="footer-links">
@@ -589,7 +621,7 @@
     </footer>
   </div>
 
-
+  <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
   <script>
     function switchModule(id) {
       const nextModule = document.getElementById(id);
@@ -624,6 +656,7 @@
       } else if (id === 'perspective') {
         body.classList.add('perspective-active');
         applyPerspectiveTime();
+        loadPerspectivePosts();
       } else if (id === 'desk') {
         document.documentElement.style.setProperty('--current-bg', 'var(--desk-bg)');
         document.documentElement.style.setProperty('--current-text', 'var(--desk-text)');
@@ -852,6 +885,173 @@
       document.addEventListener('pointerup', () => dot.classList.remove('is-pressed'));
     }
 
+    let perspectiveUser = null;
+    let perspectivePostsLoaded = false;
+    let perspectivePosts = [];
+    let pendingPerspectivePublish = null;
+
+    function getPerspectiveWriterForm() {
+      return document.getElementById('writer-form');
+    }
+
+    function setWriterStatus(message) {
+      const status = document.getElementById('writer-status');
+      if (status) status.textContent = message || '';
+    }
+
+    function openWriterRoom() {
+      const dialog = document.getElementById('writer-dialog');
+      if (!dialog) return;
+      dialog.classList.add('is-open');
+      dialog.setAttribute('aria-hidden', 'false');
+      restorePerspectiveDraft();
+      window.setTimeout(() => document.getElementById('writer-title')?.focus(), 120);
+    }
+
+    function closeWriterRoom() {
+      const dialog = document.getElementById('writer-dialog');
+      if (!dialog) return;
+      dialog.classList.remove('is-open');
+      dialog.setAttribute('aria-hidden', 'true');
+    }
+
+    function openPerspectiveAccount() {
+      if (!window.netlifyIdentity) {
+        setWriterStatus('Account access is not available yet. Please try again after Identity is enabled on the site.');
+        return;
+      }
+      window.netlifyIdentity.open();
+    }
+
+    function persistPerspectiveDraft() {
+      const form = getPerspectiveWriterForm();
+      if (!form) return;
+      const data = Object.fromEntries(new FormData(form).entries());
+      if (data.displayName || data.title || data.body) localStorage.setItem('perspective-draft', JSON.stringify(data));
+    }
+
+    function restorePerspectiveDraft() {
+      const form = getPerspectiveWriterForm();
+      if (!form) return;
+      try {
+        const draft = JSON.parse(localStorage.getItem('perspective-draft') || 'null');
+        if (!draft) return;
+        document.getElementById('writer-name').value = draft.displayName || '';
+        document.getElementById('writer-title').value = draft.title || '';
+        document.getElementById('writer-body').value = draft.body || '';
+        setWriterStatus('Private draft restored on this device.');
+      } catch (error) {
+        localStorage.removeItem('perspective-draft');
+      }
+    }
+
+    function formatPerspectiveDate(value) {
+      return new Intl.DateTimeFormat(undefined, { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(value));
+    }
+
+    function renderPerspectivePosts(posts) {
+      const feed = document.getElementById('community-feed');
+      if (!feed) return;
+      perspectivePosts = Array.isArray(posts) ? posts : [];
+      feed.textContent = '';
+      if (!perspectivePosts.length) {
+        const empty = document.createElement('div');
+        empty.className = 'community-empty';
+        empty.textContent = 'The room is open. The first piece can be yours.';
+        feed.appendChild(empty);
+        return;
+      }
+      perspectivePosts.forEach(post => {
+        const card = document.createElement('article');
+        card.className = 'community-post';
+        const meta = document.createElement('div');
+        meta.className = 'community-post-meta';
+        const author = document.createElement('span');
+        author.textContent = post.displayName || 'A Perspective writer';
+        const date = document.createElement('span');
+        date.textContent = formatPerspectiveDate(post.createdAt);
+        meta.append(author, date);
+        const title = document.createElement('h3');
+        title.className = 'community-post-title';
+        title.textContent = post.title;
+        const body = document.createElement('p');
+        body.className = 'community-post-body';
+        body.textContent = post.body;
+        const report = document.createElement('a');
+        report.className = 'community-post-report';
+        report.href = `mailto:themotiondesk@gmail.com?subject=${encodeURIComponent('[Perspective] Report post ' + post.id)}&body=${encodeURIComponent('Please review this Perspective post:\n\n' + post.title)}`;
+        report.textContent = 'Report';
+        report.setAttribute('aria-label', `Report ${post.title}`);
+        card.append(meta, title, body, report);
+        feed.appendChild(card);
+      });
+    }
+
+    async function loadPerspectivePosts() {
+      if (perspectivePostsLoaded) return;
+      try {
+        const response = await fetch('/.netlify/functions/perspective-posts', { headers: { Accept: 'application/json' } });
+        if (!response.ok) throw new Error('Feed unavailable');
+        const payload = await response.json();
+        renderPerspectivePosts(Array.isArray(payload.posts) ? payload.posts : []);
+        perspectivePostsLoaded = true;
+      } catch (error) {
+        const feed = document.getElementById('community-feed');
+        if (feed) feed.innerHTML = '<div class="community-empty">The room is ready. The community feed will appear when publishing is connected.</div>';
+      }
+    }
+
+    async function publishPerspectivePost(event) {
+      event.preventDefault();
+      const form = event.target;
+      const payload = Object.fromEntries(new FormData(form).entries());
+      if (!payload.displayName || !payload.title || !payload.body) return;
+      pendingPerspectivePublish = payload;
+      if (!perspectiveUser) {
+        setWriterStatus('Sign in once to publish under your chosen name. Your email stays private.');
+        openPerspectiveAccount();
+        return;
+      }
+      const submit = form.querySelector('.writer-submit');
+      if (submit) { submit.disabled = true; submit.textContent = 'Publishing…'; }
+      try {
+        const response = await fetch('/.netlify/functions/perspective-posts', { method: 'POST', headers: { 'Content-Type': 'application/json', Accept: 'application/json' }, body: JSON.stringify(payload) });
+        const result = await response.json().catch(() => ({}));
+        if (!response.ok) throw new Error(result.error || 'Could not publish this piece.');
+        perspectivePostsLoaded = true;
+        renderPerspectivePosts([result.post, ...perspectivePosts.filter(post => post.id !== result.post.id)]);
+        localStorage.removeItem('perspective-draft');
+        form.reset();
+        pendingPerspectivePublish = null;
+        setWriterStatus('Published to The Perspective.');
+        closeWriterRoom();
+      } catch (error) {
+        setWriterStatus(error.message || 'Publishing failed. Try again.');
+      } finally {
+        if (submit) { submit.disabled = false; submit.textContent = 'Publish to The Perspective →'; }
+      }
+    }
+
+    function setupPerspectiveIdentity() {
+      const form = getPerspectiveWriterForm();
+      if (form) form.addEventListener('input', persistPerspectiveDraft);
+      if (!window.netlifyIdentity) return;
+      window.netlifyIdentity.on('init', user => { perspectiveUser = user; });
+      window.netlifyIdentity.on('login', user => {
+        perspectiveUser = user;
+        window.netlifyIdentity.close();
+        setWriterStatus('Signed in. Your email remains private.');
+        if (pendingPerspectivePublish) window.setTimeout(() => publishPerspectivePost({ preventDefault() {}, target: form }), 80);
+      });
+      const currentUser = window.netlifyIdentity.currentUser();
+      if (currentUser) perspectiveUser = currentUser;
+      window.netlifyIdentity.on('logout', () => { perspectiveUser = null; });
+    }
+
+    document.addEventListener('keydown', event => {
+      if (event.key === 'Escape') closeWriterRoom();
+    });
+
     function handleMailSubmit(event, subject) {
       event.preventDefault();
       const form = event.target;
@@ -976,6 +1176,8 @@
       ray.style.animation = `pulse ${Math.random() * 4 + 4}s infinite ease-in-out`;
       raysContainer.appendChild(ray);
     }
+
+    setupPerspectiveIdentity();
 
     // Allow dedicated article pages to return directly to their source department.
     const requestedWing = new URLSearchParams(window.location.search).get('wing');
